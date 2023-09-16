@@ -1,0 +1,13 @@
+version: '3'
+
+services: 
+  pg:
+    image: postgres
+    restart: always
+    container_name: familyCart
+    ports: 
+      - "8888:5432"
+    environment: 
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=familyCart
