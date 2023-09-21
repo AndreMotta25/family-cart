@@ -12,6 +12,9 @@ class PendingFamiliar extends Parent {
   @Column({ nullable: false })
   userId: string;
 
+  @Column({ nullable: false })
+  userPendingId: string;
+
   @ManyToOne(() => User)
   user_pending: User;
 

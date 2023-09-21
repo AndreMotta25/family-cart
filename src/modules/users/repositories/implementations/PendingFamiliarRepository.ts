@@ -15,8 +15,8 @@ class PendingFamiliarRepository implements IPendingFamiliarRepository {
   }
   async findInvitationsByUser(id: string): Promise<PendingFamiliar[]> {
     const invitations = await this.repository.find({
-      where: { userId: id },
-      relations: { user_pending: true },
+      where: { userPendingId: id },
+      relations: { user: true },
     });
     return invitations;
   }
