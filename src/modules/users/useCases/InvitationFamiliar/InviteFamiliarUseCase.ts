@@ -1,5 +1,6 @@
-import { AppError } from 'src/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+
+import { AppError } from '@errors/AppError';
 
 import { IPendingFamiliarRepository } from '../../repositories/IPendingFamiliarRepository';
 import { IUserRepository } from '../../repositories/IUserRepository';
@@ -21,8 +22,14 @@ class InviteFamiliarUseCase {
     const familiarExist = await this.userRepository.findByEmail(kin_email);
     const userExist = await this.userRepository.findById(user_id);
 
-    if (!familiarExist || !userExist)
+    if (!userExist)
       throw new AppError({ message: 'User NotFound', statusCode: 404 });
+
+    if (!familiarExist)
+      throw new AppError({
+        message: 'Invitation target not found',
+        statusCode: 404,
+      });
 
     await this.pendingRepository.create({
       user: userExist,
