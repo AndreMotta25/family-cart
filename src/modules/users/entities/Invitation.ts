@@ -4,8 +4,8 @@ import { Entity as Parent } from '../../shared/entities/Entity';
 import { User } from './User';
 
 // tabela pivo
-@Entity('PendingFamiliar')
-class PendingFamiliar extends Parent {
+@Entity('Invitation')
+class Invitation extends Parent {
   @ManyToOne(() => User)
   user: User;
 
@@ -23,4 +23,4 @@ class PendingFamiliar extends Parent {
   }
 }
 
-export { PendingFamiliar };
+export { Invitation };

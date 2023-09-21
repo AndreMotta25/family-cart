@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 
-import { IPendingFamiliarRepository } from '../../repositories/IPendingFamiliarRepository';
+import { IInvitationsRepository } from '../../repositories/IInvitationsRepository';
 import { IUserRepository } from '../../repositories/IUserRepository';
 
 interface IInviteFamiliarRequest {
@@ -14,8 +14,8 @@ interface IInviteFamiliarRequest {
 class InviteFamiliarUseCase {
   constructor(
     @inject('UserRepository') private userRepository: IUserRepository,
-    @inject('PendingFamiliarRepository')
-    private pendingRepository: IPendingFamiliarRepository,
+    @inject('InvitationRepository')
+    private invitationRepository: IInvitationsRepository,
   ) {}
 
   async execute({ user_id, kin_email }: IInviteFamiliarRequest): Promise<void> {
@@ -31,7 +31,7 @@ class InviteFamiliarUseCase {
         statusCode: 404,
       });
 
-    await this.pendingRepository.create({
+    await this.invitationRepository.create({
       user: userExist,
       kin: familiarExist,
     });
