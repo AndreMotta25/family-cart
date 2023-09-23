@@ -5,6 +5,8 @@ import { Invitation } from '@modules/users/entities/Invitation';
 
 import {
   ICreateFamiliar,
+  IDeleteInvite,
+  IFindInvite,
   IInvitationsRepository,
 } from '../IInvitationsRepository';
 
@@ -13,6 +15,21 @@ class InvitationsRepository implements IInvitationsRepository {
 
   constructor() {
     this.repository = database.getRepository(Invitation);
+  }
+  async findInvitations({
+    owner,
+    target,
+  }: IFindInvite): Promise<Invitation | null> {
+    const invitation = await this.repository.findOne({
+      where: {
+        userId: owner,
+        userPendingId: target,
+      },
+    });
+    return invitation;
+  }
+  async deleteInvitation({ owner, target }: IDeleteInvite): Promise<void> {
+    await this.repository.delete({ userId: owner, userPendingId: target });
   }
   async findInvitationsByUser(id: string): Promise<Invitation[]> {
     const invitations = await this.repository.find({
