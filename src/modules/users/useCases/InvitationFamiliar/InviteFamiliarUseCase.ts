@@ -19,21 +19,44 @@ class InviteFamiliarUseCase {
   ) {}
 
   async execute({ user_id, kin_email }: IInviteFamiliarRequest): Promise<void> {
-    const familiarExist = await this.userRepository.findByEmail(kin_email);
+    const targetExist = await this.userRepository.findByEmail(kin_email);
     const userExist = await this.userRepository.findById(user_id);
 
     if (!userExist)
       throw new AppError({ message: 'User NotFound', statusCode: 404 });
 
-    if (!familiarExist)
+    if (!targetExist)
       throw new AppError({
         message: 'Invitation target not found',
         statusCode: 404,
       });
 
+    const invitationExists = await this.invitationRepository.findInvitations({
+      owner: user_id,
+      target: targetExist?.id,
+    });
+
+    if (invitationExists) {
+      throw new AppError({
+        message: 'Invitation already sent',
+        statusCode: 400,
+      });
+    }
+    const { familyMembers } = userExist;
+
+    const friendshipExists = familyMembers.find(
+      (family) => family.id === targetExist.id,
+    );
+
+    if (friendshipExists)
+      throw new AppError({
+        message: 'friendship already exists',
+        statusCode: 400,
+      });
+
     await this.invitationRepository.create({
       user: userExist,
-      kin: familiarExist,
+      kin: targetExist,
     });
   }
 }
