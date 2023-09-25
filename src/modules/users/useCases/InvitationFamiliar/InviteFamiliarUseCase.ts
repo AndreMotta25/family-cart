@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
+import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
 
 import { IInvitationsRepository } from '../../repositories/IInvitationsRepository';
 import { IUserRepository } from '../../repositories/IUserRepository';
@@ -16,6 +17,8 @@ class InviteFamiliarUseCase {
     @inject('UserRepository') private userRepository: IUserRepository,
     @inject('InvitationRepository')
     private invitationRepository: IInvitationsRepository,
+    @inject('FamilyMembersRepository')
+    private familyMembersRepository: IFamilyMembersRepository,
   ) {}
 
   async execute({ user_id, kin_email }: IInviteFamiliarRequest): Promise<void> {
@@ -33,7 +36,7 @@ class InviteFamiliarUseCase {
 
     const invitationExists = await this.invitationRepository.findInvitations({
       owner: user_id,
-      target: targetExist?.id,
+      target: targetExist.id,
     });
 
     if (invitationExists) {
@@ -42,15 +45,15 @@ class InviteFamiliarUseCase {
         statusCode: 400,
       });
     }
-    const { familyMembers } = userExist;
 
-    const friendshipExists = familyMembers.find(
-      (family) => family.id === targetExist.id,
-    );
+    const friendshipExists = await this.familyMembersRepository.alreadyFriends({
+      target: targetExist.id,
+      owner: userExist.id,
+    });
 
     if (friendshipExists)
       throw new AppError({
-        message: 'friendship already exists',
+        message: 'Friendship already exists',
         statusCode: 400,
       });
 
