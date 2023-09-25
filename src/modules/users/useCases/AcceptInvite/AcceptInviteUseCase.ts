@@ -35,10 +35,10 @@ class AcceptInviteUseCase {
         statusCode: 404,
       });
 
-    const { familyMembers } = user;
-
-    user.familyMembers = [...familyMembers, existsInvitationOwner];
-    await this.userRepository.create(user);
+    await this.invitationRepository.acceptInvitation({
+      target: user,
+      owner: existsInvitationOwner,
+    });
 
     await this.invitationRepository.deleteInvitation({
       owner: invitationOwnerId,
