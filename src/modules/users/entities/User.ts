@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 
 import { Entity as Parent } from '../../shared/entities/Entity';
@@ -14,23 +15,6 @@ class User extends Parent {
   @Column()
   password: string;
 
-  @ManyToMany(() => User)
-  @JoinTable({
-    name: 'FamilyMembers',
-    joinColumn: {
-      name: 'userId',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'kinId',
-      referencedColumnName: 'id',
-    },
-  })
-  // eslint-disable-next-line no-use-before-define
-  familyMembers: User[];
-
-  // @ManyToMany(() => User, (u) => u.familyMembers)
-  // friends: User[];
   @OneToMany(() => FamilyMember, (u) => u.user)
   friends: FamilyMember[];
 
