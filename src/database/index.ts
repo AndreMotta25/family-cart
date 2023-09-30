@@ -10,6 +10,7 @@ const database = new DataSource({
   database: process.env.DATABASE,
   entities: [
     './src/modules/users/entities/*.ts',
+    './src/modules/list/entities/*.ts',
     './src/modules/shared/entities/*.ts',
   ],
   migrations: ['./src/database/migrations/*.ts'],
