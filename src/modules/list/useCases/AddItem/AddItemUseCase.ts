@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
+import { IItemRepository } from '@modules/list/repositories/IItemRepository';
 import { IListRepository } from '@modules/list/repositories/IListRepository';
 
 interface IAddItemRequest {
@@ -14,6 +15,7 @@ interface IAddItemRequest {
 class AddItemUseCase {
   constructor(
     @inject('ListRepository') private listRepository: IListRepository,
+    @inject('ItemRepository') private itemRepository: IItemRepository,
   ) {}
 
   async execute({ list_id, name, quantity, url }: IAddItemRequest) {
@@ -22,7 +24,8 @@ class AddItemUseCase {
     if (!list)
       throw new AppError({ message: 'List not found', statusCode: 404 });
 
-    const item = await this.listRepository.createItem({ name, quantity, url });
+    const item = await this.itemRepository.createItem({ name, quantity, url });
+
     list.itens = [...list.itens, item];
 
     await this.listRepository.create({ ...list, user: list.owner });
