@@ -5,6 +5,11 @@ export interface IAlreadyFriendsRequest {
   target: string;
   owner: string;
 }
+export interface IFriendlyResponse {
+  id: string;
+  name: string;
+  email: string;
+}
 
 interface IFamilyMembersRepository {
   create({ target, owner }: IAcceptInvite): Promise<void>;
@@ -12,6 +17,8 @@ interface IFamilyMembersRepository {
     target,
     owner,
   }: IAlreadyFriendsRequest): Promise<FamilyMember | null>;
+  removeFriend(id_friendship: string): Promise<void>;
+  getFriends(id: string): Promise<IFriendlyResponse[]>;
 }
 
 export { IFamilyMembersRepository };

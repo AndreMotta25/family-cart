@@ -6,6 +6,7 @@ import { FamilyMember } from '@modules/users/entities/FamilyMember';
 import {
   IAlreadyFriendsRequest,
   IFamilyMembersRepository,
+  IFriendlyResponse,
 } from '../IFamilyMembersRepository';
 import { IAcceptInvite } from '../IInvitationsRepository';
 
@@ -15,6 +16,11 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
   constructor() {
     this.repository = database.getRepository(FamilyMember);
   }
+
+  async removeFriend(id_friendship: string): Promise<void> {
+    await this.repository.delete({ id: id_friendship });
+  }
+
   async alreadyFriends({
     target,
     owner,
@@ -35,6 +41,37 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
       kinId: owner.id,
     });
     await this.repository.save(invitation);
+  }
+
+  async getFriends(id: string): Promise<IFriendlyResponse[]> {
+    const friends = (
+      await this.repository.find({
+        where: [
+          {
+            userId: id,
+          },
+          {
+            kinId: id,
+          },
+        ],
+        relations: { kin: true, user: true },
+      })
+    ).map((friend) => {
+      if (friend.userId === id) {
+        return {
+          id: friend.kin.id,
+          email: friend.kin.email,
+          name: friend.kin.name,
+        };
+      }
+      return {
+        id: friend.user.id,
+        email: friend.user.email,
+        name: friend.user.name,
+      };
+    });
+
+    return friends;
   }
 }
 
