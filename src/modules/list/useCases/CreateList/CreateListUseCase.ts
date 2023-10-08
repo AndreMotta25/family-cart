@@ -8,6 +8,16 @@ interface ICreateList {
   name: string;
   owner_id: string;
 }
+interface ICreateListResponse {
+  id: string;
+  name: string;
+  created_at: Date;
+  update_at: Date;
+  owner: {
+    id: string;
+    name: string;
+  };
+}
 
 @injectable()
 class CreateListUseCase {
@@ -16,7 +26,7 @@ class CreateListUseCase {
     @inject('ListRepository') private listRepository: IListRepository,
   ) {}
 
-  async execute({ name, owner_id }: ICreateList) {
+  async execute({ name, owner_id }: ICreateList): Promise<ICreateListResponse> {
     const userExists = await this.userRepository.findById(owner_id);
 
     if (!userExists)
@@ -24,7 +34,16 @@ class CreateListUseCase {
 
     const list = await this.listRepository.create({ name, user: userExists });
 
-    return list;
+    return {
+      id: list.id,
+      name: list.name,
+      created_at: list.created_at,
+      update_at: list.update_at,
+      owner: {
+        id: list.owner.id,
+        name: list.owner.name,
+      },
+    };
   }
 }
 
