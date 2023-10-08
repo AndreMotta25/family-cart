@@ -1,18 +1,15 @@
 import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
-import { Item } from '@modules/list/entities/Item';
 import { List } from '@modules/list/entities/List';
 
-import { ICreateList, IItemRequest, IListRepository } from '../IListRepository';
+import { ICreateList, IListRepository } from '../IListRepository';
 
 class ListRepository implements IListRepository {
   private repository: Repository<List>;
-  private repositoryItens: Repository<Item>;
 
   constructor() {
     this.repository = database.getRepository(List);
-    this.repositoryItens = database.getRepository(Item);
   }
   async getList(id: string): Promise<List | null> {
     const list = await this.repository.findOne({
@@ -32,12 +29,6 @@ class ListRepository implements IListRepository {
     await this.repository.save(list);
 
     return list;
-  }
-
-  async createItem(item: IItemRequest) {
-    const newItem = this.repositoryItens.create({ ...item });
-    await this.repositoryItens.save(newItem);
-    return newItem;
   }
 }
 

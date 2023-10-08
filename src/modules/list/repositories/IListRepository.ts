@@ -9,15 +9,9 @@ export interface ICreateList {
   itens?: Item[];
   id?: string;
 }
-export interface IItemRequest {
-  name: string;
-  quantity: number;
-  url: string;
-}
 
 interface IListRepository {
   create(data: ICreateList): Promise<List>;
   getList(id: string): Promise<List | null>;
-  createItem(item: IItemRequest): Promise<Item>;
 }
 export { IListRepository };
