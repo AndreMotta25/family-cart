@@ -12,6 +12,7 @@ export interface ICreateList {
 export interface IItemRequest {
   name: string;
   quantity: number;
+  url: string;
 }
 
 interface IListRepository {

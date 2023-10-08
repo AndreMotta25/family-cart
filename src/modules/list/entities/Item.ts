@@ -12,8 +12,12 @@ class Item extends Parent {
   @Column()
   quantity: number;
 
-  @ManyToOne(() => List)
+  // Quando deletar a lista, seus respectivos itens vão ser excluidos.
+  @ManyToOne(() => List, { onDelete: 'CASCADE' })
   list: List;
+
+  @Column({ nullable: true })
+  url: string;
 
   constructor() {
     super();
