@@ -13,5 +13,7 @@ export interface ICreateList {
 interface IListRepository {
   create(data: ICreateList): Promise<List>;
   getList(id: string): Promise<List | null>;
+  remove(id: string): Promise<void>;
+  findListById(id: string): Promise<List | null>;
 }
 export { IListRepository };

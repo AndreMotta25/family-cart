@@ -11,6 +11,9 @@ class ListRepository implements IListRepository {
   constructor() {
     this.repository = database.getRepository(List);
   }
+  async remove(id: string): Promise<void> {
+    await this.repository.delete({ id });
+  }
   async getList(id: string): Promise<List | null> {
     const list = await this.repository.findOne({
       where: {
@@ -28,6 +31,16 @@ class ListRepository implements IListRepository {
     console.log(list);
     await this.repository.save(list);
 
+    return list;
+  }
+
+  async findListById(id: string) {
+    const list = await this.repository.findOne({
+      where: {
+        id,
+      },
+      relations: { owner: true },
+    });
     return list;
   }
 }
