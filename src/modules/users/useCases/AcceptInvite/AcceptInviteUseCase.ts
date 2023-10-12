@@ -18,26 +18,17 @@ class AcceptInviteUseCase {
   ) {}
 
   async execute({ invitationOwnerId, user_id }: IAcceptInviteRequest) {
-    const existsInvitationOwner =
-      await this.userRepository.findById(invitationOwnerId);
+    const invitationExists = await this.invitationRepository.findInvitations({
+      owner: invitationOwnerId,
+      target: user_id,
+    });
 
-    if (!existsInvitationOwner)
-      throw new AppError({
-        message: 'Invitation owner not found',
-        statusCode: 404,
-      });
-
-    const user = await this.userRepository.findById(user_id);
-
-    if (!user)
-      throw new AppError({
-        message: 'User not found',
-        statusCode: 404,
-      });
+    if (!invitationExists)
+      throw new AppError({ message: 'Invite Not Exists', statusCode: 404 });
 
     await this.invitationRepository.acceptInvitation({
-      target: user,
-      owner: existsInvitationOwner,
+      target: invitationExists.user_pending,
+      owner: invitationExists.user,
     });
 
     await this.invitationRepository.deleteInvitation({
