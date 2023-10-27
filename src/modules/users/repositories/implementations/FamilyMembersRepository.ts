@@ -30,6 +30,10 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
         { kinId: owner, userId: target },
         { kinId: target, userId: owner },
       ],
+      relations: {
+        kin: true,
+        user: true,
+      },
     });
     return isFriends;
   }

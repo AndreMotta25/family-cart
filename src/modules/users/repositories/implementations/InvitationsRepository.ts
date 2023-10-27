@@ -36,6 +36,10 @@ class InvitationsRepository implements IInvitationsRepository {
         userId: owner,
         userPendingId: target,
       },
+      relations: {
+        user: true,
+        user_pending: true,
+      },
     });
     return invitation;
   }
