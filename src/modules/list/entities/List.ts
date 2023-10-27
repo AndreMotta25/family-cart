@@ -11,6 +11,7 @@ import { Entity as Parent } from '@modules/shared/entities/Entity';
 import { User } from '@modules/users/entities/User';
 
 import { Item } from './Item';
+import { SharedList } from './SharedList';
 
 @Entity('Lists')
 class List extends Parent {
@@ -28,6 +29,9 @@ class List extends Parent {
 
   @OneToMany(() => Item, (item) => item.list)
   itens: Item[];
+
+  @OneToMany(() => SharedList, (s) => s.list)
+  aditionalUsers: SharedList[];
 
   constructor() {
     super();
