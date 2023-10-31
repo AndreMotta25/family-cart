@@ -6,15 +6,15 @@ import { ShareListUseCase } from './ShareListUseCase';
 class ShareListController {
   async handle(request: Request, response: Response) {
     const { id } = request.user;
-    const { guest } = request.body;
-    const { list } = request.params;
+    const { friend } = request.body;
+    const { list_id } = request.params;
 
     const shareListUseCase = container.resolve(ShareListUseCase);
 
     const pending = await shareListUseCase.execute({
       ownerId: id,
-      guestId: guest,
-      listId: list,
+      guestId: friend,
+      listId: list_id,
     });
 
     return response.status(201).json(pending);
