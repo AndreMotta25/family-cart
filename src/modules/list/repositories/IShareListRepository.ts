@@ -8,7 +8,7 @@ export interface ICreateShareRequest {
   owner: User;
   guest: User;
 }
-interface IFindByGuestAndListRequest {
+export interface IFindByGuestAndListRequest {
   guestId: string;
   listId: string;
 }
@@ -20,6 +20,7 @@ interface IShareListRepository {
     guestId,
     listId,
   }: IFindByGuestAndListRequest): Promise<SharedList | null>;
+  findShareByListWithRelations(id_list: string): Promise<SharedList[]>;
 }
 
 export { IShareListRepository };
