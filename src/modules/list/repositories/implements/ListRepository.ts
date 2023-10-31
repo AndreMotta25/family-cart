@@ -19,7 +19,11 @@ class ListRepository implements IListRepository {
       where: {
         id,
       },
-      relations: { itens: true },
+      relations: {
+        itens: true,
+        aditionalUsers: true,
+        owner: true,
+      },
     });
     return list;
   }
@@ -28,7 +32,6 @@ class ListRepository implements IListRepository {
       ...data,
       owner: data.user,
     });
-    console.log(list);
     await this.repository.save(list);
 
     return list;
