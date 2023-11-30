@@ -7,7 +7,7 @@ import { List } from './List';
 
 @Entity('SharedList')
 class SharedList extends Parent {
-  @ManyToOne(() => List, (l) => l.aditionalUsers)
+  @ManyToOne(() => List, (l) => l.aditionalUsers, { onDelete: 'CASCADE' })
   list: List;
 
   @Column()

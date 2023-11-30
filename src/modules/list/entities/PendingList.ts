@@ -19,7 +19,7 @@ class PendingList extends Parent {
   @Column()
   ownerId: string;
 
-  @ManyToOne(() => List)
+  @ManyToOne(() => List, { onDelete: 'CASCADE' })
   list: List;
 
   @Column()
