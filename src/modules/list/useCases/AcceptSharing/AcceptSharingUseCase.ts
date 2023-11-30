@@ -61,6 +61,8 @@ class AcceptSharingUseCase {
       },
       [pendingShare.ownerId as string],
     );
+
+    await this.pendingRepository.removePendingShare(pendingShare.id);
   }
 }
 

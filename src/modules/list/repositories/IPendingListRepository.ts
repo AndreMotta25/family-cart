@@ -17,6 +17,7 @@ export interface IPendingShare {
 interface IPendingListRepository {
   shareTo(data: IShareListRequest): Promise<PendingList>;
   findPendingShare(data: IPendingShare): Promise<PendingList | null>;
+  removePendingShare(id: string): Promise<void>;
 }
 
 export { IPendingListRepository };

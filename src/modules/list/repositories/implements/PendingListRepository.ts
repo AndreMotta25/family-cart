@@ -15,6 +15,10 @@ class PendingListRepository implements IPendingListRepository {
   constructor() {
     this.repository = database.getRepository(PendingList);
   }
+  async removePendingShare(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+
   async findPendingShare(data: IPendingShare): Promise<PendingList | null> {
     const pendingShare = await this.repository.findOne({
       where: {
