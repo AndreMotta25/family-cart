@@ -5,11 +5,10 @@ import { RemoveItemUseCase } from './RemoveItemUseCase';
 
 class RemoveItemController {
   async handle(request: Request, response: Response) {
-    const { id_item } = request.params;
-
+    const { list_id, id_item } = request.params;
     const removeItemUseCase = container.resolve(RemoveItemUseCase);
 
-    await removeItemUseCase.execute(id_item);
+    await removeItemUseCase.execute({ item_id: id_item, list_id });
 
     return response.status(204).json();
   }
