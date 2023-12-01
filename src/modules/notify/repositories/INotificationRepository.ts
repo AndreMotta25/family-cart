@@ -11,5 +11,6 @@ export interface INotificationRequest {
 interface INotificationRepository {
   create(data: INotificationRequest, receptors: string[]): Promise<void>;
   getByReceptor(to: string): Promise<INotificationResponse[]>;
+  deleteNotificationByInvitation(invitation_id: string): Promise<void>;
 }
 export { INotificationRepository };

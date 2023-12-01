@@ -30,6 +30,9 @@ class NotificationRepository implements INotificationRepository {
     this.repository = database.getRepository(Notification);
     this.repositoryNotificationsUser = database.getRepository(NotificationUser);
   }
+  async deleteNotificationByInvitation(invitation_id: string): Promise<void> {
+    await this.repository.delete({ entity_id: invitation_id });
+  }
 
   async getByReceptor(to: string): Promise<INotificationResponse[]> {
     const notificationsUser = await this.repositoryNotificationsUser.find({
