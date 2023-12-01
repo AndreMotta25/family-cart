@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
+import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
 import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
 
 import { IInvitationsRepository } from '../../repositories/IInvitationsRepository';
@@ -19,6 +20,8 @@ class InviteFamiliarUseCase {
     private invitationRepository: IInvitationsRepository,
     @inject('FamilyMembersRepository')
     private familyMembersRepository: IFamilyMembersRepository,
+    @inject('NotificationRepository')
+    private notifyRepository: INotificationRepository,
   ) {}
 
   async execute({ user_id, kin_email }: IInviteFamiliarRequest): Promise<void> {
@@ -34,7 +37,7 @@ class InviteFamiliarUseCase {
         statusCode: 404,
       });
 
-    const invitationExists = await this.invitationRepository.findInvitations({
+    const invitationExists = await this.invitationRepository.findInvitation({
       owner: user_id,
       target: targetExist.id,
     });
@@ -57,10 +60,21 @@ class InviteFamiliarUseCase {
         statusCode: 400,
       });
 
-    await this.invitationRepository.create({
+    const invitation = await this.invitationRepository.create({
       user: userExist,
       kin: targetExist,
     });
+
+    await this.notifyRepository.create(
+      {
+        read: false,
+        emitterId: userExist.id,
+        entity_id: invitation.id,
+        entity_name: 'invitation',
+        type: 'invitationFamiliar',
+      },
+      [targetExist.id],
+    );
   }
 }
 
