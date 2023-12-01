@@ -23,11 +23,15 @@ class InvitationsRepository implements IInvitationsRepository {
   ) {
     this.repository = database.getRepository(Invitation);
   }
+  async findInvitationById(id: string): Promise<Invitation | null> {
+    const invitation = await this.repository.findOne({ where: { id } });
+    return invitation;
+  }
 
   async acceptInvitation({ target, owner }: IAcceptInvite): Promise<void> {
     await this.familyMembersRepository.create({ target, owner });
   }
-  async findInvitations({
+  async findInvitation({
     owner,
     target,
   }: IFindInvite): Promise<Invitation | null> {

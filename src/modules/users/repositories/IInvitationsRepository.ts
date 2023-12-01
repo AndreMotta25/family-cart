@@ -20,9 +20,10 @@ export interface IAcceptInvite {
 interface IInvitationsRepository {
   create(data: ICreateFamiliar): Promise<Invitation>;
   findInvitationsByUser(id: string): Promise<Invitation[]>;
-  findInvitations({ owner, target }: IFindInvite): Promise<Invitation | null>;
+  findInvitation({ owner, target }: IFindInvite): Promise<Invitation | null>;
   deleteInvitation({ owner, target }: IDeleteInvite): Promise<void>;
   acceptInvitation({ target, owner }: IAcceptInvite): Promise<void>;
+  findInvitationById(id: string): Promise<Invitation | null>;
 }
 
 export { IInvitationsRepository };
