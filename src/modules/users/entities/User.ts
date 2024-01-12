@@ -17,6 +17,9 @@ class User extends Parent {
   @Column()
   password: string;
 
+  @Column({ nullable: false, default: 'internal' })
+  login: string;
+
   @OneToMany(() => FamilyMember, (u) => u.user)
   friends: FamilyMember[];
 
