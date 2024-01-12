@@ -7,7 +7,7 @@ import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 
 interface IAcceptInviteRequest {
   invitationOwnerId: string;
-  user_id: string;
+  userLogged_id: string;
 }
 
 @injectable()
@@ -20,16 +20,16 @@ class AcceptInviteUseCase {
     private notifyRepository: INotificationRepository,
   ) {}
 
-  async execute({ invitationOwnerId, user_id }: IAcceptInviteRequest) {
+  async execute({ invitationOwnerId, userLogged_id }: IAcceptInviteRequest) {
     const invitationExists = await this.invitationRepository.findInvitation({
       owner: invitationOwnerId,
-      target: user_id,
+      target: userLogged_id,
     });
 
     if (!invitationExists)
       throw new AppError({ message: 'Invite Not Exists', statusCode: 404 });
 
-    await this.invitationRepository.acceptInvitation({
+    const confirmation = await this.invitationRepository.acceptInvitation({
       target: invitationExists.user_pending,
       owner: invitationExists.user,
     });
@@ -41,8 +41,19 @@ class AcceptInviteUseCase {
 
     await this.invitationRepository.deleteInvitation({
       owner: invitationOwnerId,
-      target: user_id,
+      target: userLogged_id,
     });
+
+    await this.notifyRepository.create(
+      {
+        emitterId: userLogged_id,
+        read: false,
+        entity_id: confirmation.id,
+        entity_name: 'familyMembers',
+        type: 'acceptInvite',
+      },
+      [invitationOwnerId],
+    );
   }
 }
 
