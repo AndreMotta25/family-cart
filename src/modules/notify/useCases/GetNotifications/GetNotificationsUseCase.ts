@@ -1,17 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, injectable } from 'tsyringe';
 
-import { List } from '@modules/list/entities/List';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
-import { listsNotifications } from '@modules/notify/notifications_templates/listTemplates';
 import { INotificationResponse } from '@modules/notify/repositories/implements/NotificationRepository';
 import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
 
-interface IRepositories {
-  list: IListRepository;
-}
+import { providers } from './OCP/Entities';
+import { IGetNotification } from './OCP/IGetNotification';
 
-interface INotificationsNormalized {
+export interface INotificationsGrouped {
   name: string;
   notifications: INotificationResponse[];
   entity_id: string;
@@ -44,63 +40,66 @@ interface IResponse {
 
 @injectable()
 class GetNotificationsUseCase {
-  private repositories: IRepositories;
-  /*
-    Passando os repositorios pelo construtor vou evitar criar repositorios desnecessariamente, por que são singleton.
-    */
   constructor(
     @inject('NotificationRepository')
     private notifyRepository: INotificationRepository,
-    @inject('ListRepository')
-    private listRepository: IListRepository,
-  ) {
-    this.repositories = {
-      list: this.listRepository,
-    };
-  }
+  ) {}
+
   async execute(to: string) {
-    const normalizedNotifications: INotificationsNormalized[] = [];
     const notifications = await this.notifyRepository.getByReceptor(to);
+    const groupedNotifications = this.groupNotifications(notifications);
 
-    console.log(notifications);
-
-    // Empilha de acordo com o id da entidade em questão.
-    for (let index = 0; index < notifications.length; index += 1) {
-      const noti = normalizedNotifications.find(
-        (n) => n.name === notifications[index].entity_name,
-      );
-      if (noti) {
-        noti.notifications = [...noti.notifications, notifications[index]];
-      } else {
-        normalizedNotifications.push({
-          name: notifications[index].entity_name,
-          notifications: [notifications[index]],
-          entity_id: notifications[index].entity_id,
-        });
-      }
-    }
-    // pega as informaçoes.
     const notificationsFiltered = (
       await Promise.all(
-        normalizedNotifications.map(async (objectNotification) => {
-          if (objectNotification.name === 'list') {
-            const list = (await this.repositories.list.findListById(
-              objectNotification.entity_id,
-            )) as List;
+        groupedNotifications.map(async (objectNotification) => {
+          const notificationProvider: IGetNotification =
+            providers[objectNotification.name as keyof typeof providers]();
 
-            return objectNotification.notifications.map((notification) => {
-              const type = notification.type as 'addItem' | 'shareList';
-              return listsNotifications[type](notification, list);
-            });
-          }
-          return false;
+          return notificationProvider.getNotifications(objectNotification);
         }),
       )
-    ).filter((e) => e);
+    ).reduce((acc: IResponse[], next: IResponse[]) => {
+      return acc.concat(next);
+    }, []);
 
-    return notificationsFiltered[0];
+    return notificationsFiltered || [];
+  }
+  private groupNotifications(notifications: INotificationResponse[]) {
+    // os returns atualizam o estado do acumulador
+    const groupedNotifications = notifications.reduce(
+      (
+        notificationGroup: INotificationsGrouped[],
+        notification: INotificationResponse,
+      ) => {
+        const group = notificationGroup.find(
+          (n) =>
+            n.name === notification.entity_name &&
+            n.entity_id === notification.id,
+        );
+        if (group) {
+          group.notifications = [...group.notifications, notification];
+          return [...notificationGroup];
+        }
+        return [
+          ...notificationGroup,
+          {
+            name: notification.entity_name,
+            notifications: [notification],
+            entity_id: notification.entity_id,
+          },
+        ];
+      },
+      [],
+    );
+
+    return groupedNotifications;
   }
 }
 
 export { GetNotificationsUseCase };
 export { IResponse };
+
+/*
+  A aplicação do ocp aqui foi interessante porque cada parte da notificação fica isolada se uma der problema não afetará a outra parte
+  e acresentar mais tipos de notificaçoes fica mais facil.
+*/
