@@ -9,6 +9,7 @@ export interface IRequestUser {
   email: string;
   password: string;
   id?: string;
+  login: 'external' | 'internal';
 }
 interface IResponseUser {
   name: string;
@@ -37,6 +38,7 @@ class CreateUserUseCase {
       email,
       password: hashPassword,
       name,
+      login: 'internal',
     });
 
     return {
