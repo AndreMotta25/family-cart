@@ -12,13 +12,14 @@ export interface IFriendlyResponse {
 }
 
 interface IFamilyMembersRepository {
-  create({ target, owner }: IAcceptInvite): Promise<void>;
+  create({ target, owner }: IAcceptInvite): Promise<FamilyMember>;
   alreadyFriends({
     target,
     owner,
   }: IAlreadyFriendsRequest): Promise<FamilyMember | null>;
   removeFriend(id_friendship: string): Promise<void>;
   getFriends(id: string): Promise<IFriendlyResponse[]>;
+  getRelationById(id: string): Promise<FamilyMember | null>;
 }
 
 export { IFamilyMembersRepository };

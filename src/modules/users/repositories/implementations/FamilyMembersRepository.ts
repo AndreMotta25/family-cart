@@ -16,6 +16,14 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
   constructor() {
     this.repository = database.getRepository(FamilyMember);
   }
+  async getRelationById(id: string): Promise<FamilyMember | null> {
+    const relation = await this.repository.findOne({
+      where: {
+        id,
+      },
+    });
+    return relation;
+  }
 
   async removeFriend(id_friendship: string): Promise<void> {
     await this.repository.delete({ id: id_friendship });
@@ -37,7 +45,7 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
     });
     return isFriends;
   }
-  async create({ target, owner }: IAcceptInvite): Promise<void> {
+  async create({ target, owner }: IAcceptInvite): Promise<FamilyMember> {
     const invitation = this.repository.create({
       user: target,
       kin: owner,
@@ -45,6 +53,7 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
       kinId: owner.id,
     });
     await this.repository.save(invitation);
+    return invitation;
   }
 
   async getFriends(id: string): Promise<IFriendlyResponse[]> {
