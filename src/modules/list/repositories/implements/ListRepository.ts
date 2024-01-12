@@ -11,6 +11,14 @@ class ListRepository implements IListRepository {
   constructor() {
     this.repository = database.getRepository(List);
   }
+  async findListsByUserId(userId: string): Promise<List[]> {
+    const lists = await this.repository.find({
+      where: {
+        ownerId: userId,
+      },
+    });
+    return lists;
+  }
   async remove(id: string): Promise<void> {
     await this.repository.delete({ id });
   }

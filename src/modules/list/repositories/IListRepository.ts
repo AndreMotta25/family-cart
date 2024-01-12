@@ -15,5 +15,6 @@ interface IListRepository {
   getList(id: string): Promise<List | null>;
   remove(id: string): Promise<void>;
   findListById(id: string): Promise<List | null>;
+  findListsByUserId(userId: string): Promise<List[]>;
 }
 export { IListRepository };
