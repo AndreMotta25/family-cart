@@ -1,5 +1,6 @@
 import { Invitation } from '@modules/users/entities/Invitation';
 
+import { FamilyMember } from '../entities/FamilyMember';
 import { User } from '../entities/User';
 
 export interface ICreateFamiliar {
@@ -22,7 +23,7 @@ interface IInvitationsRepository {
   findInvitationsByUser(id: string): Promise<Invitation[]>;
   findInvitation({ owner, target }: IFindInvite): Promise<Invitation | null>;
   deleteInvitation({ owner, target }: IDeleteInvite): Promise<void>;
-  acceptInvitation({ target, owner }: IAcceptInvite): Promise<void>;
+  acceptInvitation({ target, owner }: IAcceptInvite): Promise<FamilyMember>;
   findInvitationById(id: string): Promise<Invitation | null>;
 }
 

@@ -2,6 +2,7 @@ import { database } from 'src/database/index';
 import { inject, injectable } from 'tsyringe';
 import { Repository } from 'typeorm';
 
+import { FamilyMember } from '@modules/users/entities/FamilyMember';
 import { Invitation } from '@modules/users/entities/Invitation';
 
 import { IFamilyMembersRepository } from '../IFamilyMembersRepository';
@@ -28,9 +29,17 @@ class InvitationsRepository implements IInvitationsRepository {
     return invitation;
   }
 
-  async acceptInvitation({ target, owner }: IAcceptInvite): Promise<void> {
-    await this.familyMembersRepository.create({ target, owner });
+  async acceptInvitation({
+    target,
+    owner,
+  }: IAcceptInvite): Promise<FamilyMember> {
+    const confirmation = await this.familyMembersRepository.create({
+      target,
+      owner,
+    });
+    return confirmation;
   }
+
   async findInvitation({
     owner,
     target,
