@@ -9,6 +9,7 @@ class GetFriendsController {
     const getFriendsUseCase = container.resolve(GetFriendsUseCase);
 
     const friends = await getFriendsUseCase.execute(id);
+
     return response.status(200).json(friends);
   }
 }

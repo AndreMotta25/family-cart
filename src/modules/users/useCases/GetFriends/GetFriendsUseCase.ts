@@ -11,7 +11,7 @@ class GetFriendsUseCase {
 
   async execute(id: string) {
     const friends = await this.familyMembersRepository.getFriends(id);
-    return friends;
+    return friends.map((friend) => ({ ...friend, url: '' }));
   }
 }
 
