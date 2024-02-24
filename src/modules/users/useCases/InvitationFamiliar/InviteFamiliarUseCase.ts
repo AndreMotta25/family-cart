@@ -2,6 +2,8 @@ import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
+import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
+import { User } from '@modules/users/entities/User';
 import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
 
 import { IInvitationsRepository } from '../../repositories/IInvitationsRepository';
@@ -22,14 +24,18 @@ class InviteFamiliarUseCase {
     private familyMembersRepository: IFamilyMembersRepository,
     @inject('NotificationRepository')
     private notifyRepository: INotificationRepository,
+    @inject('NotifyUser') private notifyUseCase: INotifyUseCase,
   ) {}
 
   async execute({ user_id, kin_email }: IInviteFamiliarRequest): Promise<void> {
     const targetExist = await this.userRepository.findByEmail(kin_email);
     const userExist = await this.userRepository.findById(user_id);
 
-    if (!userExist)
-      throw new AppError({ message: 'User NotFound', statusCode: 404 });
+    if (user_id === targetExist?.id)
+      throw new AppError({
+        message: "You can't invite yourself as a friend",
+        statusCode: 400,
+      });
 
     if (!targetExist)
       throw new AppError({
@@ -51,7 +57,7 @@ class InviteFamiliarUseCase {
 
     const friendshipExists = await this.familyMembersRepository.alreadyFriends({
       target: targetExist.id,
-      owner: userExist.id,
+      owner: userExist?.id as string,
     });
 
     if (friendshipExists)
@@ -61,19 +67,27 @@ class InviteFamiliarUseCase {
       });
 
     const invitation = await this.invitationRepository.create({
-      user: userExist,
+      user: userExist as User,
       kin: targetExist,
     });
 
     await this.notifyRepository.create(
       {
         read: false,
-        emitterId: userExist.id,
+        emitterId: userExist?.id as string,
         entity_id: invitation.id,
         entity_name: 'invitation',
         type: 'invitationFamiliar',
       },
       [targetExist.id],
+    );
+    // SSE
+    await this.notifyUseCase.execute(
+      targetExist.id,
+      JSON.stringify({
+        message: 'Você recebeu uma nova notificação.',
+        isNew: 1,
+      }),
     );
   }
 }
