@@ -27,7 +27,7 @@ export const listsNotifications = {
         avatar: '',
       },
       action: {
-        accept: `${process.env.HOSTLINK}/notifications/${notification.id}/read`,
+        accept: `notifications/${notification.id}/read`,
         reject: ``,
       },
       isRead: notification.read,
@@ -40,7 +40,9 @@ export const listsNotifications = {
       type: 'action',
       entity_type: 'list',
       entity_id: list.id,
-      message: `O usuario ${emitter.name} Está compartilhando a lista ${list.name} com você. Aceita ?`,
+      message: notification.read
+        ? `Voce aceitou participar da lista ${list.name} do ${emitter.name}`
+        : `O usuario <b>${emitter.name}</b>, Está compartilhando a lista <b>${list.name}<b/> com você. Aceita ?`,
       notification_id: notification.id,
       created_at: notification.created_at,
       emitter: {
@@ -56,8 +58,8 @@ export const listsNotifications = {
         avatar: '',
       },
       action: {
-        accept: `${process.env.HOSTLINK}/list/${list.id}/accept_share`,
-        reject: `${process.env.HOSTLINK}/list/${list.id}/denied_share`,
+        accept: `lists/${list.id}/accept_share`,
+        reject: `lists/${list.id}/denied_share`,
       },
       isRead: notification.read,
     };
@@ -69,7 +71,7 @@ export const listsNotifications = {
       type: 'warning',
       entity_type: 'list',
       entity_id: list.id,
-      message: `O usuario ${emitter.name} aceitou o compartilhamento da lista ${list.name}.`,
+      message: `O usuario <b>${emitter.name}</b> aceitou o compartilhamento da lista <b>${list.name}</b>.`,
       notification_id: notification.id,
       created_at: notification.created_at,
       emitter: {
@@ -85,7 +87,7 @@ export const listsNotifications = {
         avatar: '',
       },
       action: {
-        accept: `${process.env.HOSTLINK}/notifications/${notification.id}/read`,
+        accept: `notifications/${notification.id}/read`,
         reject: '',
       },
       isRead: notification.read,
@@ -114,7 +116,36 @@ export const listsNotifications = {
         avatar: '',
       },
       action: {
-        accept: `${process.env.HOSTLINK}/notifications/${notification.id}/read`,
+        accept: `notifications/${notification.id}/read`,
+        reject: '',
+      },
+      isRead: notification.read,
+    };
+  },
+  cancelSharing(notification: INotificationResponse, list: List) {
+    const { emitter, receptor } = notification;
+
+    return {
+      type: 'warning',
+      entity_type: 'list',
+      entity_id: list.id,
+      message: `O usuario ${emitter.name} cancelou o compartilhamento da lista ${list.name}.`,
+      notification_id: notification.id,
+      created_at: notification.created_at,
+      emitter: {
+        id: emitter.id,
+        name: emitter.name,
+        email: emitter.email,
+        avatar: '',
+      },
+      to: {
+        id: receptor.id,
+        name: receptor.name,
+        email: receptor.email,
+        avatar: '',
+      },
+      action: {
+        accept: `notifications/${notification.id}/read`,
         reject: '',
       },
       isRead: notification.read,

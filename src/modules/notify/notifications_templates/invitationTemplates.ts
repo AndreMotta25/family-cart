@@ -13,7 +13,9 @@ const invitationTemplates = {
       type: 'action',
       entity_type: 'invitation',
       entity_id: invitation.id,
-      message: `O usuario ${emitter.name} está te convidando para ser amigo. Aceita ?`,
+      message: notification.read
+        ? `Voce aceitou ser amigo de ${emitter.name}`
+        : `O usuario ${emitter.name} está te convidando para ser amigo. Aceita ?`,
       notification_id: notification.id,
       created_at: notification.created_at,
       emitter: {
@@ -29,8 +31,8 @@ const invitationTemplates = {
         avatar: '',
       },
       action: {
-        accept: `${process.env.HOSTLINK}/invite/${emitter.id}/accept`,
-        reject: `${process.env.HOSTLINK}/invite/${emitter.id}/denied`,
+        accept: `invite/friend/${emitter.id}/accept`,
+        reject: `invite/friend/${emitter.id}/denied`,
       },
       isRead: notification.read,
     };
