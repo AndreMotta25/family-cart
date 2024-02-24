@@ -6,6 +6,7 @@ import { IItemRepository } from '@modules/list/repositories/IItemRepository';
 import { IListRepository } from '@modules/list/repositories/IListRepository';
 import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
 import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
+import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
 
 interface IRemoveItemRequest {
   list_id: string;
@@ -20,6 +21,7 @@ class RemoveItemUseCase {
     @inject('NotificationRepository')
     private notifyRepository: INotificationRepository,
     @inject('ListRepository') private listRepository: IListRepository,
+    @inject('NotifyUser') private notifyUseCase: INotifyUseCase,
   ) {}
 
   async execute({ item_id, list_id }: IRemoveItemRequest) {
@@ -44,6 +46,13 @@ class RemoveItemUseCase {
           type: 'removeItem',
         },
         receptors,
+      );
+      await this.notifyUseCase.execute(
+        receptors,
+        JSON.stringify({
+          message: 'Você recebeu uma nova notificação.',
+          isNew: 1,
+        }),
       );
     }
 
