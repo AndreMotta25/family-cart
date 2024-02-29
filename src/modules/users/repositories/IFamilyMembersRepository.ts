@@ -20,6 +20,7 @@ interface IFamilyMembersRepository {
   removeFriend(id_friendship: string): Promise<void>;
   getFriends(id: string): Promise<IFriendlyResponse[]>;
   getRelationById(id: string): Promise<FamilyMember | null>;
+  getTotalFriends(id_user: string): Promise<number>;
 }
 
 export { IFamilyMembersRepository };

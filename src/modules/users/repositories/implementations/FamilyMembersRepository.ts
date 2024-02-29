@@ -16,6 +16,20 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
   constructor() {
     this.repository = database.getRepository(FamilyMember);
   }
+  async getTotalFriends(id_user: string): Promise<number> {
+    const total = await this.repository.count({
+      where: [
+        {
+          userId: id_user,
+        },
+        {
+          kinId: id_user,
+        },
+      ],
+    });
+    return total;
+  }
+
   async getRelationById(id: string): Promise<FamilyMember | null> {
     const relation = await this.repository.findOne({
       where: {
