@@ -41,7 +41,7 @@ class AuthenticateUserByProviderUseCase {
           login: 'external',
         });
         const token = sign(
-          { subject: newUser.id },
+          { subject: newUser.id, hashToken: newUser.hash },
           String(process.env.Secret),
           {
             expiresIn: Number(process.env.ExpirationTime),
@@ -68,7 +68,7 @@ class AuthenticateUserByProviderUseCase {
         await this.notificationRepository.totalOfNotifications(userExists.id);
 
       const accessToken = sign(
-        { subject: userExists.id },
+        { subject: userExists.id, hashToken: userExists.hash },
         String(process.env.Secret),
         {
           expiresIn: Number(process.env.ExpirationTime),
@@ -78,7 +78,6 @@ class AuthenticateUserByProviderUseCase {
         user: {
           id: userExists.id,
           email: userExists.email,
-          name: userExists.name,
         },
         token: accessToken,
         totalNotifications,
