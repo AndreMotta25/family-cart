@@ -6,6 +6,7 @@ import { SharedList } from '@modules/list/entities/SharedList';
 import {
   ICreateShareRequest,
   IFindByGuestAndListRequest,
+  IIsjoinedInListRequest,
   IShareListRepository,
 } from '../IShareListRepository';
 
@@ -15,6 +16,21 @@ class ShareListRepository implements IShareListRepository {
   constructor() {
     this.repository = database.getRepository(SharedList);
   }
+  async cancelSharing(id: string): Promise<void> {
+    await this.repository.delete({ id });
+  }
+  async isJoinedInList({
+    list_id,
+    user_id,
+  }: IIsjoinedInListRequest): Promise<boolean> {
+    const result = await this.findShareByGuestAndList({
+      guestId: user_id,
+      listId: list_id,
+    });
+    if (result) return true;
+    return false;
+  }
+
   async findShareByGuestAndList({
     guestId,
     listId,
@@ -32,6 +48,13 @@ class ShareListRepository implements IShareListRepository {
       where: { listId: id_list },
     });
     return shared;
+  }
+  async findShareByGuest(user_id: string): Promise<SharedList[]> {
+    const shareds = await this.repository.find({
+      where: { additionalUserId: user_id },
+      relations: { list: true, owner: true },
+    });
+    return shareds;
   }
 
   async createShare(data: ICreateShareRequest): Promise<SharedList> {

@@ -9,6 +9,7 @@ import { User } from '@modules/users/entities/User';
 import {
   INotificationRepository,
   INotificationRequest,
+  IUpdateNotification,
 } from '../INotificationRepository';
 
 export interface INotificationResponse {
@@ -30,10 +31,21 @@ class NotificationRepository implements INotificationRepository {
     this.repository = database.getRepository(Notification);
     this.repositoryNotificationsUser = database.getRepository(NotificationUser);
   }
+  async removeNotificationById(notification_id: string): Promise<void> {
+    await this.repository.delete({ id: notification_id });
+  }
+  async updateNotification({
+    notification,
+  }: IUpdateNotification): Promise<void> {
+    await this.repository.save({ ...notification });
+  }
   async totalOfNotifications(user_id: string): Promise<number> {
     const total = await this.repositoryNotificationsUser.count({
       where: {
         receptorId: user_id,
+        notification: {
+          read: false,
+        },
       },
     });
     return total;
@@ -49,6 +61,7 @@ class NotificationRepository implements INotificationRepository {
         receptorId: to,
       },
       relations: { emitter: true, receptor: true, notification: true },
+      order: { notification: { created_at: 'desc' } },
     });
 
     const notifications = notificationsUser.map(
@@ -72,6 +85,7 @@ class NotificationRepository implements INotificationRepository {
       entity_name: data.entity_name,
       entity_id: data.entity_id,
       type: data.type,
+      read: data.read,
     });
 
     await this.repository.save(notification);
@@ -90,6 +104,16 @@ class NotificationRepository implements INotificationRepository {
         })),
       )
       .execute();
+  }
+
+  async getNotificationById(
+    notification_id: string,
+  ): Promise<NotificationUser | null> {
+    const notification = this.repositoryNotificationsUser.findOne({
+      where: { notificationId: notification_id },
+      relations: { receptor: true, notification: true, emitter: true },
+    });
+    return notification;
   }
 }
 

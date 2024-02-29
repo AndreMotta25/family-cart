@@ -25,7 +25,7 @@ class FamilyMemberNotificationProvider implements IGetNotification {
     )) as FamilyMember;
 
     return objectNotification.notifications.map((notification) => {
-      const type = notification.type as 'acceptInvite';
+      const type = notification.type as 'acceptInvite' | 'invitationFamiliar';
       return familyMembersTemplates[type](notification, relation);
     });
   }

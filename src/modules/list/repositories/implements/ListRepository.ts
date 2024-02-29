@@ -16,6 +16,7 @@ class ListRepository implements IListRepository {
       where: {
         ownerId: userId,
       },
+      order: { update_at: 'DESC' },
     });
     return lists;
   }
@@ -38,6 +39,7 @@ class ListRepository implements IListRepository {
   async create(data: ICreateList): Promise<List> {
     const list = this.repository.create({
       ...data,
+      update_at: new Date(),
       owner: data.user,
     });
     await this.repository.save(list);
