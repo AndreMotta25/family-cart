@@ -25,7 +25,10 @@ class InvitationsRepository implements IInvitationsRepository {
     this.repository = database.getRepository(Invitation);
   }
   async findInvitationById(id: string): Promise<Invitation | null> {
-    const invitation = await this.repository.findOne({ where: { id } });
+    const invitation = await this.repository.findOne({
+      where: { id },
+      relations: { user: true },
+    });
     return invitation;
   }
 
@@ -56,9 +59,11 @@ class InvitationsRepository implements IInvitationsRepository {
     });
     return invitation;
   }
+
   async deleteInvitation({ owner, target }: IDeleteInvite): Promise<void> {
     await this.repository.delete({ userId: owner, userPendingId: target });
   }
+
   async findInvitationsByUser(id: string): Promise<Invitation[]> {
     const invitations = await this.repository.find({
       where: { userPendingId: id },
