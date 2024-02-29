@@ -5,11 +5,11 @@ import { GetListUseCase } from './GetListUseCase';
 
 class GetListController {
   async handle(request: Request, response: Response) {
-    const { id_list } = request.params;
+    const { list_id } = request.params;
 
     const getList = container.resolve(GetListUseCase);
 
-    const list = await getList.execute(id_list);
+    const list = await getList.execute(list_id);
 
     return response.status(200).json(list);
   }
