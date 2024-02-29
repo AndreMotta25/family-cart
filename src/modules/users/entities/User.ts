@@ -20,6 +20,9 @@ class User extends Parent {
   @Column({ nullable: false, default: 'internal' })
   login: string;
 
+  @Column({ generated: 'uuid' })
+  hash: string;
+
   @OneToMany(() => FamilyMember, (u) => u.user)
   friends: FamilyMember[];
 
