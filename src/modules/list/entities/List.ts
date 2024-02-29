@@ -15,8 +15,12 @@ import { SharedList } from './SharedList';
 
 @Entity('Lists')
 class List extends Parent {
-  @ManyToOne(() => User)
+  @ManyToOne(() => User) // muitas listas para um usuario.
   owner: User;
+
+  // Essa propriedade só vai entrar aqui para podermos pesquisar.
+  @Column({ nullable: false })
+  ownerId: string;
 
   @Column()
   name: string;
@@ -30,7 +34,7 @@ class List extends Parent {
   @OneToMany(() => Item, (item) => item.list)
   itens: Item[];
 
-  @OneToMany(() => SharedList, (s) => s.list)
+  @OneToMany(() => SharedList, (s) => s.list, { onDelete: 'CASCADE' })
   aditionalUsers: SharedList[];
 
   constructor() {
