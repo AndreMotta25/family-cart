@@ -6,7 +6,7 @@ import { AcceptSharingUseCase } from './AcceptSharingUseCase';
 class AcceptSharingController {
   async handle(request: Request, response: Response) {
     const { id } = request.user;
-    const { owner } = request.body;
+    const { owner, notification_id } = request.body;
     const { list_id } = request.params;
 
     const acceptList = container.resolve(AcceptSharingUseCase);
@@ -15,9 +15,10 @@ class AcceptSharingController {
       ownerId: owner,
       guestId: id,
       listId: list_id,
+      notification_id,
     });
 
-    return response.status(200).json(acceptResponse);
+    return response.status(201).json(acceptResponse);
   }
 }
 

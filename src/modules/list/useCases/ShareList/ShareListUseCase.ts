@@ -5,6 +5,7 @@ import { IListRepository } from '@modules/list/repositories/IListRepository';
 import { IPendingListRepository } from '@modules/list/repositories/IPendingListRepository';
 import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
 import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
+import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
 import { User } from '@modules/users/entities/User';
 import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
 import { IUserRepository } from '@modules/users/repositories/IUserRepository';
@@ -29,6 +30,7 @@ class ShareListUseCase {
     private notifyRepository: INotificationRepository,
     @inject('UserRepository')
     private userRepository: IUserRepository,
+    @inject('NotifyUser') private notifyUseCase: INotifyUseCase,
   ) {}
 
   async execute({ ownerId, guestId, listId }: IShareListRequest) {
@@ -97,6 +99,14 @@ class ShareListUseCase {
         type: 'shareList',
       },
       [guest?.id as string],
+    );
+
+    await this.notifyUseCase.execute(
+      guest?.id as string,
+      JSON.stringify({
+        message: 'Você recebeu uma nova notificação.',
+        isNew: 1,
+      }),
     );
 
     return pendingInvite;

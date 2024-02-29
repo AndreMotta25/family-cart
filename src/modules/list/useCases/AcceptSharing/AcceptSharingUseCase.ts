@@ -1,18 +1,22 @@
-import { inject, injectable } from 'tsyringe';
+import { container, inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
 import { IPendingListRepository } from '@modules/list/repositories/IPendingListRepository';
 import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
 import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
+import { NotifyUseCase } from '@modules/notify/useCases/Notify/NotifyUseCase';
 
 interface IAcceptSharingRequest {
   guestId: string;
   ownerId: string;
   listId: string;
+  notification_id: string;
 }
 
 @injectable()
 class AcceptSharingUseCase {
+  private notifyUseCase: NotifyUseCase;
+
   constructor(
     @inject('PendingListRepository')
     private pendingRepository: IPendingListRepository,
@@ -20,9 +24,16 @@ class AcceptSharingUseCase {
     private shareRepository: IShareListRepository,
     @inject('NotificationRepository')
     private notifyRepository: INotificationRepository,
-  ) {}
+  ) {
+    this.notifyUseCase = container.resolve(NotifyUseCase);
+  }
 
-  async execute({ ownerId, guestId, listId }: IAcceptSharingRequest) {
+  async execute({
+    ownerId,
+    guestId,
+    listId,
+    notification_id,
+  }: IAcceptSharingRequest) {
     const alreadyShared = await this.shareRepository.findShareByGuestAndList({
       listId,
       guestId,
@@ -62,7 +73,26 @@ class AcceptSharingUseCase {
       [pendingShare.ownerId as string],
     );
 
+    const notificationRead =
+      await this.notifyRepository.getNotificationById(notification_id);
+
+    if (notificationRead) {
+      notificationRead.notification.read = true;
+      await this.notifyRepository.updateNotification({
+        notification: notificationRead.notification,
+      });
+    }
+
+    await this.notifyUseCase.execute(
+      ownerId,
+      JSON.stringify({
+        message: 'Você recebeu uma nova notificação.',
+        isNew: 1,
+      }),
+    );
+
     await this.pendingRepository.removePendingShare(pendingShare.id);
+    return `Voce aceitou participar da lista ${pendingShare.list.name} do ${pendingShare.owner.name}`;
   }
 }
 
