@@ -3,6 +3,7 @@ import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppError';
+import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
 import { IUserRepository } from '@modules/users/repositories/IUserRepository';
 
 interface IAuthenticateRequest {
@@ -14,14 +15,19 @@ interface IAuthenticateResponse {
   user: {
     id: string;
     email: string;
+    // name: string;
+    // image: string;
   };
   token: string;
+  // totalNotifications: number;
 }
 
 @injectable()
 class AuthenticateUserUseCase {
   constructor(
     @inject('UserRepository') private userRepository: IUserRepository,
+    @inject('NotificationRepository')
+    private notificationRepository: INotificationRepository,
   ) {}
 
   async execute({
@@ -38,20 +44,39 @@ class AuthenticateUserUseCase {
 
     const passMatch = await compare(password, user.password);
 
+    if (user.login === 'external' && !passMatch) {
+      throw new AppError({
+        message: 'You created the account with a social login',
+        statusCode: 400,
+      });
+    }
+
     if (!passMatch) {
       throw new AppError({
         message: 'Email or Password is Incorrect',
         statusCode: 400,
       });
     }
-    const token = sign({ subject: user.id }, '1234', { expiresIn: '1d' });
+    const token = sign(
+      { subject: user.id, hashToken: user.hash },
+      String(process.env.Secret),
+      {
+        expiresIn: Number(process.env.ExpirationTime),
+      },
+    );
+
+    // const totalNotifications =
+    //   await this.notificationRepository.totalOfNotifications(user.id);
 
     return {
       user: {
-        email: user.email,
         id: user.id,
+        email: user.email,
+        // name: user.name,
+        // image: '',
       },
       token,
+      // totalNotifications,
     };
   }
 }
