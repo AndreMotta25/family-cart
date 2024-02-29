@@ -1,16 +1,8 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  // JoinTable,
-  // ManyToMany,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany } from 'typeorm';
 
 import { Entity as Parent } from '@modules/shared/entities/Entity';
 
 import { NotificationUser } from './NotificationUser';
-// import { User } from '@modules/users/entities/User';
 
 @Entity('Notifications')
 class Notification extends Parent {
@@ -29,7 +21,7 @@ class Notification extends Parent {
   @Column()
   entity_name: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   created_at: Date;
 
   constructor() {
