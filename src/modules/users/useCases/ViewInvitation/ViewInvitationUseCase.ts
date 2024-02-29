@@ -30,8 +30,3 @@ class ViewInvitationUseCase {
 }
 
 export { ViewInvitationUseCase };
-
-/*
-    Só vai usar esse useCase quem estiver logado e esse usuario logado não poderá passar outros ids.
-    só o dele mesmo, então, o id não ficará publico para ser passado.
-*/
