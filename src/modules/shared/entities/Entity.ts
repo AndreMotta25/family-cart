@@ -1,13 +1,13 @@
-import { v4 } from "uuid"
-import {PrimaryColumn} from 'typeorm'
+import { PrimaryColumn } from 'typeorm';
+import { v4 } from 'uuid';
 
 abstract class Entity {
-    @PrimaryColumn()
-    id: string
+  @PrimaryColumn()
+  id: string;
 
-    constructor() {
-        this.id = v4();
-    }
+  constructor() {
+    this.id = v4();
+  }
 }
 
-export {Entity}
+export { Entity };
