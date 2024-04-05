@@ -17,6 +17,12 @@ class User extends Parent {
   @Column()
   password: string;
 
+  @Column({ nullable: true })
+  avatar: string;
+
+  @Column({ nullable: true })
+  cid: string;
+
   @Column({ nullable: false, default: 'internal' })
   login: string;
 
