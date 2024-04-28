@@ -1,6 +1,6 @@
 import { AWSError, S3 } from 'aws-sdk';
 import { Request } from 'aws-sdk/lib/request';
-import { readFile } from 'fs/promises';
+import { readFile, unlink } from 'fs/promises';
 import mime from 'mime';
 
 import { IPhotoProvider, ISaveFile } from '../IPhotoProvider';
@@ -50,12 +50,23 @@ class S3PhotoProvider implements IPhotoProvider {
     const requestS3 = this.s3.putObject(params);
     const cidPhoto = (await getCid(requestS3)) as string;
 
+    await unlink(file); // apaga o arquivo da pasta tmp.
+
     return { name: fileName, cid: cidPhoto };
   }
 
-  deleteFile(file: string): Promise<void> {
-    console.log(file);
-    throw new Error('Method not implemented.');
+  async deleteFile(file: string): Promise<void> {
+    this.s3.deleteObject(
+      {
+        Bucket: process.env.S3_BUCKET_NAME as string,
+        Key: file,
+      },
+      (e, data) => {
+        console.log(e);
+        console.log(data);
+      },
+    );
+    console.log('deletando o arquivo', file);
   }
 }
 
