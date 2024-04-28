@@ -36,7 +36,7 @@ class GetUserUseCase {
 
     return {
       name: user.name,
-      image: '',
+      image: `https://ipfs.filebase.io/ipfs/${user.cid}`,
       totalNotifications,
       totalFriends: qtdFriends,
       listsSharedTotal,
