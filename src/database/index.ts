@@ -2,6 +2,10 @@ import 'dotenv/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SeederOptions } from 'typeorm-extension';
 
+let extension = 'ts';
+
+if (process.env.NODE_ENV?.toLowerCase() === 'production') extension = 'js';
+
 const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
   host: process.env.HOST,
@@ -10,10 +14,10 @@ const options: DataSourceOptions & SeederOptions = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
   entities: [
-    './src/modules/users/entities/*.ts',
-    './src/modules/list/entities/*.ts',
-    './src/modules/shared/entities/*.ts',
-    './src/modules/notify/entities/*.ts',
+    `./src/modules/users/entities/*.${extension}`,
+    `./src/modules/list/entities/*.${extension}`,
+    `./src/modules/shared/entities/*.${extension}`,
+    `./src/modules/notify/entities/*.${extension}`,
   ],
   migrations: ['./src/database/migrations/*.ts'],
   seeds: [],
