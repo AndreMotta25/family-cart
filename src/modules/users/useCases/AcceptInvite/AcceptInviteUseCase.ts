@@ -12,6 +12,20 @@ interface IAcceptInviteRequest {
   notification_id: string;
 }
 
+interface ICreateNotificationRequest {
+  emitterId: string;
+  read: boolean;
+  entity_id: string;
+  entity_name: string;
+  type: string;
+  targets: string[];
+}
+interface INotificationForOwner {
+  emitterId: string;
+  target: string;
+  entity_id: string;
+}
+
 @injectable()
 class AcceptInviteUseCase {
   constructor(
@@ -36,41 +50,35 @@ class AcceptInviteUseCase {
     if (!invitationExists)
       throw new AppError({ message: 'Invite Not Exists', statusCode: 404 });
 
-    const confirmation = await this.invitationRepository.acceptInvitation({
-      target: invitationExists.user_pending,
-      owner: invitationExists.user,
-    });
+    const familyMembersConfirmation =
+      await this.invitationRepository.acceptInvitation({
+        target: invitationExists.user_pending,
+        owner: invitationExists.user,
+      });
     /*
       Como vou deletar o convite, tenho que deletar a notificação que faz menção a ele também
     */
     await this.notifyRepository.removeNotificationById(notification_id);
 
-    await this.notifyRepository.create(
-      {
-        emitterId: invitationOwnerId,
-        read: true,
-        entity_id: confirmation.id,
-        entity_name: 'familyMembers',
-        type: 'invitationFamiliar',
-      },
-      [userLogged_id],
-    );
+    await this.createNotification({
+      emitterId: invitationOwnerId,
+      read: true,
+      entity_id: familyMembersConfirmation.id,
+      entity_name: 'familyMembers',
+      type: 'invitationFamiliar',
+      targets: [userLogged_id],
+    });
 
     await this.invitationRepository.deleteInvitation({
       owner: invitationOwnerId,
       target: userLogged_id,
     });
 
-    await this.notifyRepository.create(
-      {
-        emitterId: userLogged_id,
-        read: false,
-        entity_id: confirmation.id,
-        entity_name: 'familyMembers',
-        type: 'acceptInvite',
-      },
-      [invitationOwnerId],
-    );
+    await this.createNotificationForOwner({
+      emitterId: userLogged_id,
+      entity_id: familyMembersConfirmation.id,
+      target: invitationOwnerId,
+    });
 
     await this.notifyUseCase.execute(
       invitationOwnerId,
@@ -81,6 +89,38 @@ class AcceptInviteUseCase {
     );
     return `Voce aceitou ser amigo de ${invitationExists.user.name}`;
   }
-}
 
+  async createNotification({
+    emitterId,
+    entity_id,
+    entity_name,
+    type,
+    targets,
+  }: ICreateNotificationRequest) {
+    await this.notifyRepository.create(
+      {
+        emitterId,
+        read: false,
+        entity_id,
+        entity_name,
+        type,
+      },
+      targets,
+    );
+  }
+  async createNotificationForOwner({
+    emitterId,
+    target,
+    entity_id,
+  }: INotificationForOwner) {
+    await this.createNotification({
+      emitterId,
+      read: false,
+      entity_id,
+      entity_name: 'familyMembers',
+      type: 'acceptInvite',
+      targets: [target],
+    });
+  }
+}
 export { AcceptInviteUseCase };
