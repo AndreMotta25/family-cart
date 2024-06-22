@@ -14,6 +14,8 @@ import { INotificationRepository } from '@modules/notify/repositories/INotificat
 import { ISseConnectRepository } from '@modules/notify/repositories/ISseConnectRepository';
 import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
 import { NotifyUseCase } from '@modules/notify/useCases/Notify/NotifyUseCase';
+import { S3PhotoProvider } from '@modules/users/providers/photoProvider/implements/S3PhotoProvider';
+import { IPhotoProvider } from '@modules/users/providers/photoProvider/IPhotoProvider';
 import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
 import { IInvitationsRepository } from '@modules/users/repositories/IInvitationsRepository';
 import { FamilyMembersRepository } from '@modules/users/repositories/implementations/FamilyMembersRepository';
@@ -52,3 +54,4 @@ container.registerSingleton<ISseConnectRepository>(
   SseConnectRepository,
 );
 container.registerSingleton<INotifyUseCase>('NotifyUser', NotifyUseCase);
+container.registerSingleton<IPhotoProvider>('PhotoProvider', S3PhotoProvider);
