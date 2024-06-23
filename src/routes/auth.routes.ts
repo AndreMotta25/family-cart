@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { isAuthenticated } from 'src/middleware/isAuthenticated';
 
 import { AuthenticateUserController } from '@modules/users/useCases/AuthenticateUser/AuthenticateUserController';
 import { AuthenticateUserByProviderController } from '@modules/users/useCases/AuthenticateUserByProvider/AuthenticateUserByProviderController';
 import { ResetLogoutController } from '@modules/users/useCases/ResetLogout/ResetLogoutController';
+
+import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const authRoutes = Router();
 

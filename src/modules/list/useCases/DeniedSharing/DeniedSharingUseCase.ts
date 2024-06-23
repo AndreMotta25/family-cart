@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IPendingListRepository } from '@modules/list/repositories/IPendingListRepository';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { IPendingListRepository } from '../../repositories/IPendingListRepository';
 
 interface IDeniedSharingUseCase {
   owner_id: string;

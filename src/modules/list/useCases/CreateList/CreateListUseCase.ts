@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IUserRepository } from '../../../users/repositories/IUserRepository';
+import { IListRepository } from '../../repositories/IListRepository';
 
 interface ICreateList {
   name: string;

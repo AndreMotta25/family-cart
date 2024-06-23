@@ -7,8 +7,7 @@ import './shared/container';
 import cors from 'cors';
 import express, { json, NextFunction, Request, Response } from 'express';
 
-import { AppError } from '@errors/AppError';
-
+import { AppError } from './errors/AppError';
 import { routes } from './routes';
 
 const app = express();

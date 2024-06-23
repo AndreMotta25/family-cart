@@ -1,5 +1,4 @@
-import { User } from '@modules/users/entities/User';
-
+import { User } from '../../users/entities/User';
 import { List } from '../entities/List';
 import { SharedList } from '../entities/SharedList';
 

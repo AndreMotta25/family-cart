@@ -1,8 +1,7 @@
 import { Column, CreateDateColumn, Entity, ManyToOne } from 'typeorm';
 
-import { Entity as Parent } from '@modules/shared/entities/Entity';
-import { User } from '@modules/users/entities/User';
-
+import { Entity as Parent } from '../../shared/entities/Entity';
+import { User } from '../../users/entities/User';
 import { List } from './List';
 
 @Entity('PendingList')

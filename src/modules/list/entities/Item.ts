@@ -1,7 +1,6 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 
-import { Entity as Parent } from '@modules/shared/entities/Entity';
-
+import { Entity as Parent } from '../../shared/entities/Entity';
 import { List } from './List';
 
 @Entity('Itens')

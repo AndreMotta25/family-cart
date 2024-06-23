@@ -1,6 +1,6 @@
-import { List } from '@modules/list/entities/List';
-import { PendingList } from '@modules/list/entities/PendingList';
-import { User } from '@modules/users/entities/User';
+import { User } from '../../users/entities/User';
+import { List } from '../entities/List';
+import { PendingList } from '../entities/PendingList';
 
 export interface IShareListRequest {
   owner: User;

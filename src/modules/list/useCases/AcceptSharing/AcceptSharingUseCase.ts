@@ -1,10 +1,10 @@
 import { container, inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IPendingListRepository } from '@modules/list/repositories/IPendingListRepository';
-import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { NotifyUseCase } from '@modules/notify/useCases/Notify/NotifyUseCase';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { NotifyUseCase } from '../../../notify/useCases/Notify/NotifyUseCase';
+import { IPendingListRepository } from '../../repositories/IPendingListRepository';
+import { IShareListRepository } from '../../repositories/IShareListRepository';
 
 interface IAcceptSharingRequest {
   guestId: string;

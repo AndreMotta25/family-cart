@@ -1,8 +1,7 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
-import { SharedList } from '@modules/list/entities/SharedList';
-
+import { database } from '../../../../database/index';
+import { SharedList } from '../../entities/SharedList';
 import {
   ICreateShareRequest,
   IFindByGuestAndListRequest,

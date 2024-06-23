@@ -10,13 +10,19 @@
     "forceConsistentCasingInFileNames": true,            
     "strict": true,                                      
     "strictPropertyInitialization": false,             
-    
     "skipLibCheck": true,
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@errors/*": ["./src/errors/*"],
       "@utils/*":["./src/utils/*"]
     },        
-    "resolveJsonModule": true                      
+    "resolveJsonModule": true,
+    "outDir": "./dist"                      
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }

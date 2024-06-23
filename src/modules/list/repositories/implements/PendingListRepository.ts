@@ -1,8 +1,7 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
-import { PendingList } from '@modules/list/entities/PendingList';
-
+import { database } from '../../../../database/index';
+import { PendingList } from '../../entities/PendingList';
 import {
   IPendingListRepository,
   IPendingShare,

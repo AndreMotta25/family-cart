@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import jwtDecode from 'jwt-decode';
 
-import { AppError } from '@errors/AppError';
-import { UserRepository } from '@modules/users/repositories/implementations/UserRepository';
+import { AppError } from '../errors/AppError';
+import { UserRepository } from '../modules/users/repositories/implementations/UserRepository';
 
 interface IJwt {
   subject: string;

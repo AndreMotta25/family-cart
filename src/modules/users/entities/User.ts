@@ -1,8 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 
-import { SharedList } from '@modules/list/entities/SharedList';
-
+import { SharedList } from '../../list/entities/SharedList';
 import { Entity as Parent } from '../../shared/entities/Entity';
 import { FamilyMember } from './FamilyMember';
 

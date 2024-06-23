@@ -1,10 +1,10 @@
-import { database } from 'src/database/index';
 import { inject, injectable } from 'tsyringe';
 import { Repository } from 'typeorm';
 
 import { FamilyMember } from '@modules/users/entities/FamilyMember';
 import { Invitation } from '@modules/users/entities/Invitation';
 
+import { database } from '../../../../database/index';
 import { IFamilyMembersRepository } from '../IFamilyMembersRepository';
 import {
   IAcceptInvite,

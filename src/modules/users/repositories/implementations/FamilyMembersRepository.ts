@@ -1,8 +1,8 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
 import { FamilyMember } from '@modules/users/entities/FamilyMember';
 
+import { database } from '../../../../database/index';
 import {
   IAlreadyFriendsRequest,
   IFamilyMembersRepository,

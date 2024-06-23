@@ -1,8 +1,7 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
-import { List } from '@modules/list/entities/List';
-
+import { database } from '../../../../database/index';
+import { List } from '../../entities/List';
 import { ICreateList, IListRepository } from '../IListRepository';
 
 class ListRepository implements IListRepository {

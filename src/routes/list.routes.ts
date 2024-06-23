@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { isAuthenticated } from 'src/middleware/isAuthenticated';
 
 import { AcceptSharingController } from '@modules/list/useCases/AcceptSharing/AcceptSharingController';
 import { AddItemController } from '@modules/list/useCases/AddItem/AddItemController';
@@ -15,6 +14,8 @@ import { RemoveListController } from '@modules/list/useCases/RemoveList/RemoveLi
 import { RenameListController } from '@modules/list/useCases/RenameList/RenameListController';
 import { ShareListController } from '@modules/list/useCases/ShareList/ShareListController';
 import { UpdateItemController } from '@modules/list/useCases/UpdateItem/UpdateItemController';
+
+import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const listRoutes = Router();
 
