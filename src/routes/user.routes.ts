@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { isAuthenticated } from 'src/middleware/isAuthenticated';
 
 import { CancelFriendshipController } from '@modules/users/useCases/CancelFriendship/CancelFriendshipController';
 import { CreateUserController } from '@modules/users/useCases/CreateUser/CreateUserController';
@@ -9,6 +8,8 @@ import { UpdateNameController } from '@modules/users/useCases/UpdateName/UpdateN
 import { UpdatePasswordController } from '@modules/users/useCases/UpdatePassword/UpdatePasswordController';
 import { UploadAvatarController } from '@modules/users/useCases/UploadAvatar/UploadAvatarController';
 import { upload } from '@utils/multer';
+
+import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const userRoutes = Router();
 

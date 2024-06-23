@@ -1,6 +1,6 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
+import { database } from '@database/index';
 import { List } from '@modules/list/entities/List';
 
 import { ICreateList, IListRepository } from '../IListRepository';

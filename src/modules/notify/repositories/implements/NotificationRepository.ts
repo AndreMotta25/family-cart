@@ -1,7 +1,7 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
+import { database } from '@database/index';
 import { Notification } from '@modules/notify/entities/Notification';
 import { NotificationUser } from '@modules/notify/entities/NotificationUser';
 import { User } from '@modules/users/entities/User';

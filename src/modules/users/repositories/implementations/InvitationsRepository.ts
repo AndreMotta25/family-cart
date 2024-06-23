@@ -1,7 +1,7 @@
-import { database } from 'src/database/index';
 import { inject, injectable } from 'tsyringe';
 import { Repository } from 'typeorm';
 
+import { database } from '@database/index';
 import { FamilyMember } from '@modules/users/entities/FamilyMember';
 import { Invitation } from '@modules/users/entities/Invitation';
 

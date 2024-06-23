@@ -1,6 +1,6 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
+import { database } from '@database/index';
 import { Item } from '@modules/list/entities/Item';
 
 import { IItemRepository, IItemRequest } from '../IItemRepository';

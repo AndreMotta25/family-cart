@@ -15,7 +15,8 @@
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@errors/*": ["./src/errors/*"],
-      "@utils/*":["./src/utils/*"]
+      "@utils/*":["./src/utils/*"],
+      "@database/*":["./src/database/*"]
     },        
     "resolveJsonModule": true                      
   }

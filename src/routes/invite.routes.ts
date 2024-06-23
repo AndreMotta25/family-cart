@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { isAuthenticated } from 'src/middleware/isAuthenticated';
 
 import { AcceptInviteController } from '@modules/users/useCases/AcceptInvite/AcceptInviteController';
 import { DeniedInviteController } from '@modules/users/useCases/DeniedInvite/DeniedInviteController';
 import { InviteFamiliarController } from '@modules/users/useCases/InvitationFamiliar/InviteFamiliarController';
 import { ViewInvitationController } from '@modules/users/useCases/ViewInvitation/ViewInvitationController';
+
+import { isAuthenticated } from '../middleware/isAuthenticated';
 
 const inviteRoutes = Router();
 

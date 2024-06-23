@@ -1,6 +1,6 @@
-import { database } from 'src/database/index';
 import { Repository } from 'typeorm';
 
+import { database } from '@database/index';
 import { User } from '@modules/users/entities/User';
 import { IRequestUser } from '@modules/users/useCases/CreateUser/CreateUserUseCase';
 
