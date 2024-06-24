@@ -69,7 +69,7 @@
     "commit": "cz",
     "test": "jest",
     "start": "node dist/src/server.js",
-    "build": "babel src --extensions \".js,.ts\"  --out-dir dist/src --copy-files --no-copy-ignored"
+    "build:prod": "babel src --extensions \".js,.ts\"  --out-dir dist/src --copy-files --no-copy-ignored"
   },
   "config": {
     "commitizen": {
