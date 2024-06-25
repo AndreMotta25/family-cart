@@ -19,7 +19,7 @@ const options: DataSourceOptions & SeederOptions = {
     `./src/modules/shared/entities/*.${extension}`,
     `./src/modules/notify/entities/*.${extension}`,
   ],
-  migrations: ['./src/database/migrations/*.ts'],
+  migrations: [`./src/database/migrations/*.${extension}`],
   seeds: [],
 };
 

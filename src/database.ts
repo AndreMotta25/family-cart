@@ -5,6 +5,7 @@ database
   .then(() => {
     console.log('Database is Runnig');
   })
-  .catch(() => {
+  .catch((e) => {
+    console.log(e);
     console.log('Database Error');
   });
