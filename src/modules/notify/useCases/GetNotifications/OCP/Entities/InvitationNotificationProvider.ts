@@ -1,9 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { invitationTemplates } from '@modules/notify/notifications_templates/invitationTemplates';
-import { Invitation } from '@modules/users/entities/Invitation';
-import { IInvitationsRepository } from '@modules/users/repositories/IInvitationsRepository';
-
+import { Invitation } from '../../../../../users/entities/Invitation';
+import { IInvitationsRepository } from '../../../../../users/repositories/IInvitationsRepository';
+import { invitationTemplates } from '../../../../notifications_templates/invitationTemplates';
 import {
   INotificationsGrouped,
   IResponse,

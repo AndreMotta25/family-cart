@@ -1,10 +1,9 @@
 import { Router } from 'express';
 
-import { AuthenticateUserController } from '@modules/users/useCases/AuthenticateUser/AuthenticateUserController';
-import { AuthenticateUserByProviderController } from '@modules/users/useCases/AuthenticateUserByProvider/AuthenticateUserByProviderController';
-import { ResetLogoutController } from '@modules/users/useCases/ResetLogout/ResetLogoutController';
-
 import { isAuthenticated } from '../middleware/isAuthenticated';
+import { AuthenticateUserController } from '../modules/users/useCases/AuthenticateUser/AuthenticateUserController';
+import { AuthenticateUserByProviderController } from '../modules/users/useCases/AuthenticateUserByProvider/AuthenticateUserByProviderController';
+import { ResetLogoutController } from '../modules/users/useCases/ResetLogout/ResetLogoutController';
 
 const authRoutes = Router();
 

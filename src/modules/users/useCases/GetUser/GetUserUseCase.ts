@@ -1,10 +1,10 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IShareListRepository } from '../../../list/repositories/IShareListRepository';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { IFamilyMembersRepository } from '../../repositories/IFamilyMembersRepository';
+import { IUserRepository } from '../../repositories/IUserRepository';
 
 @injectable()
 class GetUserUseCase {

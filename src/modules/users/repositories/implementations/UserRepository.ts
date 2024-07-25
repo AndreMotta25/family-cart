@@ -1,9 +1,8 @@
 import { Repository } from 'typeorm';
 
-import { User } from '@modules/users/entities/User';
-import { IRequestUser } from '@modules/users/useCases/CreateUser/CreateUserUseCase';
-
 import { database } from '../../../../database/index';
+import { User } from '../../entities/User';
+import { IRequestUser } from '../../useCases/CreateUser/CreateUserUseCase';
 import { IUserRepository } from '../IUserRepository';
 
 class UserRepository implements IUserRepository {

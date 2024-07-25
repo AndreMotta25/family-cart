@@ -1,5 +1,4 @@
-import { FamilyMember } from '@modules/users/entities/FamilyMember';
-
+import { FamilyMember } from '../../users/entities/FamilyMember';
 import { INotificationResponse } from '../repositories/implements/NotificationRepository';
 
 const familyMembersTemplates = {

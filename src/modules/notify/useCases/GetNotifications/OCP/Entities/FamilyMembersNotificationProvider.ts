@@ -1,9 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { familyMembersTemplates } from '@modules/notify/notifications_templates/familyMembersTemplates';
-import { FamilyMember } from '@modules/users/entities/FamilyMember';
-import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
-
+import { FamilyMember } from '../../../../../users/entities/FamilyMember';
+import { IFamilyMembersRepository } from '../../../../../users/repositories/IFamilyMembersRepository';
+import { familyMembersTemplates } from '../../../../notifications_templates/familyMembersTemplates';
 import {
   INotificationsGrouped,
   IResponse,

@@ -1,5 +1,4 @@
-import { Invitation } from '@modules/users/entities/Invitation';
-
+import { Invitation } from '../../users/entities/Invitation';
 import { INotificationResponse } from '../repositories/implements/NotificationRepository';
 
 const invitationTemplates = {

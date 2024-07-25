@@ -1,7 +1,6 @@
 import { OAuth2Client } from 'google-auth-library';
 
-import { AppError } from '@errors/AppError';
-
+import { AppError } from '../../../../../errors/AppError';
 import { IProvider, IProviderResponse } from '../IProvider';
 
 class GoogleProvider implements IProvider {

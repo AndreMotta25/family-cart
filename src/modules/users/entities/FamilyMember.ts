@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
-import { Entity as Parent } from '@modules/shared/entities/Entity';
-
+import { Entity as Parent } from '../../shared/entities/Entity';
 import { User } from './User';
 
 @Entity('FamilyMembers')

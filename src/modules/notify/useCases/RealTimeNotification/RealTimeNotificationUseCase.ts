@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 
-import { ISseConnectRepository } from '@modules/notify/repositories/ISseConnectRepository';
+import { ISseConnectRepository } from '../../repositories/ISseConnectRepository';
 
 interface IRequestRealTimeNotification {
   userId: string;

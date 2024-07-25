@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, injectable } from 'tsyringe';
 
-import { INotificationResponse } from '@modules/notify/repositories/implements/NotificationRepository';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-
+import { INotificationResponse } from '../../repositories/implements/NotificationRepository';
+import { INotificationRepository } from '../../repositories/INotificationRepository';
 import { providers } from './OCP/Entities';
 import { IGetNotification } from './OCP/IGetNotification';
 

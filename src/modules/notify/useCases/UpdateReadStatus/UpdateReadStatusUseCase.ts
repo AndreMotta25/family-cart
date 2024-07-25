@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../repositories/INotificationRepository';
 
 interface IUpdateReadStatusRequest {
   notification_id: string;

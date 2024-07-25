@@ -1,11 +1,11 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
 import { User } from '@modules/users/entities/User';
-import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
 
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { INotifyUseCase } from '../../../notify/useCases/Notify/INotifyUseCase';
+import { IFamilyMembersRepository } from '../../repositories/IFamilyMembersRepository';
 import { IInvitationsRepository } from '../../repositories/IInvitationsRepository';
 import { IUserRepository } from '../../repositories/IUserRepository';
 

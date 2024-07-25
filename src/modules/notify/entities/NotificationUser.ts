@@ -1,8 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 
-import { Entity as Parent } from '@modules/shared/entities/Entity';
-import { User } from '@modules/users/entities/User';
-
+import { Entity as Parent } from '../../shared/entities/Entity';
+import { User } from '../../users/entities/User';
 import { Notification } from './Notification';
 
 @Entity('Notifications_User')

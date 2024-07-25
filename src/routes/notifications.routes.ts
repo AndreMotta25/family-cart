@@ -1,10 +1,9 @@
 import { Router } from 'express';
 
-import { GetNotificationsController } from '@modules/notify/useCases/GetNotifications/GetNotificationsController';
-import { RealTimeNotificationController } from '@modules/notify/useCases/RealTimeNotification/RealTimeNotificationController';
-import { UpdateReadStatusController } from '@modules/notify/useCases/UpdateReadStatus/UpdateReadStatusController';
-
 import { isAuthenticated } from '../middleware/isAuthenticated';
+import { GetNotificationsController } from '../modules/notify/useCases/GetNotifications/GetNotificationsController';
+import { RealTimeNotificationController } from '../modules/notify/useCases/RealTimeNotification/RealTimeNotificationController';
+import { UpdateReadStatusController } from '../modules/notify/useCases/UpdateReadStatus/UpdateReadStatusController';
 
 const notificationsRouter = Router();
 

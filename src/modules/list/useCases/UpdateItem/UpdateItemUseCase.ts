@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IItemRepository } from '@modules/list/repositories/IItemRepository';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
-import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IItemRepository } from '../../repositories/IItemRepository';
+import { IListRepository } from '../../repositories/IListRepository';
+import { IShareListRepository } from '../../repositories/IShareListRepository';
 
 interface IUpdateItemRequest {
   list_id: string;

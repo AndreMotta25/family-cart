@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IListRepository } from '../../repositories/IListRepository';
 
 interface IRenameListRequest {
   list_id: string;

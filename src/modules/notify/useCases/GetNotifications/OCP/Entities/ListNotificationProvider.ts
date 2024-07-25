@@ -1,9 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { List } from '@modules/list/entities/List';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
-import { listsNotifications } from '@modules/notify/notifications_templates/listTemplates';
-
+import { List } from '../../../../../list/entities/List';
+import { IListRepository } from '../../../../../list/repositories/IListRepository';
+import { listsNotifications } from '../../../../notifications_templates/listTemplates';
 import {
   INotificationsGrouped,
   IResponse,

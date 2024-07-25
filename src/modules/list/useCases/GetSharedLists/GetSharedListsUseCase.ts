@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
+import { IShareListRepository } from '../../repositories/IShareListRepository';
 
 interface IGetSharedListsRequest {
   guest_id: string;

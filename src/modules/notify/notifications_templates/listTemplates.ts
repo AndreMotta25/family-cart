@@ -1,5 +1,4 @@
-import { List } from '@modules/list/entities/List';
-
+import { List } from '../../list/entities/List';
 import { INotificationResponse } from '../repositories/implements/NotificationRepository';
 import { IResponse } from '../useCases/GetNotifications/GetNotificationsUseCase';
 

@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { IInvitationsRepository } from '@modules/users/repositories/IInvitationsRepository';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { IInvitationsRepository } from '../../repositories/IInvitationsRepository';
 
 interface IDeniedInviteUseCase {
   owner_id: string;

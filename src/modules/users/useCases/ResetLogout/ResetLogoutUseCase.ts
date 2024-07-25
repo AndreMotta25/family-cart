@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 import { v4 } from 'uuid';
 
-import { AppError } from '@errors/AppError';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IUserRepository } from '../../repositories/IUserRepository';
 
 @injectable()
 class ResetLogoutUseCase {

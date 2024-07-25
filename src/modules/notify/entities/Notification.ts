@@ -1,7 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany } from 'typeorm';
 
-import { Entity as Parent } from '@modules/shared/entities/Entity';
-
+import { Entity as Parent } from '../../shared/entities/Entity';
 import { NotificationUser } from './NotificationUser';
 
 @Entity('Notifications')

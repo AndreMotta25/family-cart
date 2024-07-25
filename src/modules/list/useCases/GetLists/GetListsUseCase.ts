@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { IListRepository } from '@modules/list/repositories/IListRepository';
+import { IListRepository } from '../../repositories/IListRepository';
 
 @injectable()
 class GetListsUseCase {

@@ -1,21 +1,20 @@
 import { Router } from 'express';
 
-import { AcceptSharingController } from '@modules/list/useCases/AcceptSharing/AcceptSharingController';
-import { AddItemController } from '@modules/list/useCases/AddItem/AddItemController';
-import { CancelSharingController } from '@modules/list/useCases/CancelSharing/CancelSharingController';
-import { CreateListController } from '@modules/list/useCases/CreateList/CreateListController';
-import { DeniedSharingController } from '@modules/list/useCases/DeniedSharing/DeniedSharingController';
-import { GetListController } from '@modules/list/useCases/GetList/GetListController';
-import { GetListsController } from '@modules/list/useCases/GetLists/GetListsController';
-import { GetSharedListsController } from '@modules/list/useCases/GetSharedLists/GetSharedListsController';
-import { IsSharedController } from '@modules/list/useCases/IsShared/IsSharedController';
-import { RemoveItemController } from '@modules/list/useCases/RemoveItem/RemoveItemController';
-import { RemoveListController } from '@modules/list/useCases/RemoveList/RemoveListController';
-import { RenameListController } from '@modules/list/useCases/RenameList/RenameListController';
-import { ShareListController } from '@modules/list/useCases/ShareList/ShareListController';
-import { UpdateItemController } from '@modules/list/useCases/UpdateItem/UpdateItemController';
-
 import { isAuthenticated } from '../middleware/isAuthenticated';
+import { AcceptSharingController } from '../modules/list/useCases/AcceptSharing/AcceptSharingController';
+import { AddItemController } from '../modules/list/useCases/AddItem/AddItemController';
+import { CancelSharingController } from '../modules/list/useCases/CancelSharing/CancelSharingController';
+import { CreateListController } from '../modules/list/useCases/CreateList/CreateListController';
+import { DeniedSharingController } from '../modules/list/useCases/DeniedSharing/DeniedSharingController';
+import { GetListController } from '../modules/list/useCases/GetList/GetListController';
+import { GetListsController } from '../modules/list/useCases/GetLists/GetListsController';
+import { GetSharedListsController } from '../modules/list/useCases/GetSharedLists/GetSharedListsController';
+import { IsSharedController } from '../modules/list/useCases/IsShared/IsSharedController';
+import { RemoveItemController } from '../modules/list/useCases/RemoveItem/RemoveItemController';
+import { RemoveListController } from '../modules/list/useCases/RemoveList/RemoveListController';
+import { RenameListController } from '../modules/list/useCases/RenameList/RenameListController';
+import { ShareListController } from '../modules/list/useCases/ShareList/ShareListController';
+import { UpdateItemController } from '../modules/list/useCases/UpdateItem/UpdateItemController';
 
 const listRoutes = Router();
 

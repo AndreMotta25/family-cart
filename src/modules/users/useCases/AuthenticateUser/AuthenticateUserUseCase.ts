@@ -2,9 +2,9 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { IUserRepository } from '../../repositories/IUserRepository';
 
 interface IAuthenticateRequest {
   email: string;

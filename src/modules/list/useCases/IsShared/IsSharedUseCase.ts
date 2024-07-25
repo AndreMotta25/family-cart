@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
-import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IListRepository } from '../../repositories/IListRepository';
+import { IShareListRepository } from '../../repositories/IShareListRepository';
 
 interface IIsSharedRequest {
   friend_id: string;

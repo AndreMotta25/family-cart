@@ -1,6 +1,5 @@
-import { Invitation } from '@modules/users/entities/Invitation';
-
 import { FamilyMember } from '../entities/FamilyMember';
+import { Invitation } from '../entities/Invitation';
 import { User } from '../entities/User';
 
 export interface ICreateFamiliar {

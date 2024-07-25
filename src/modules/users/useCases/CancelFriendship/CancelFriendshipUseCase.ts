@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IFamilyMembersRepository } from '../../repositories/IFamilyMembersRepository';
+import { IUserRepository } from '../../repositories/IUserRepository';
 
 interface IRemoveRequest {
   id: string;

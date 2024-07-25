@@ -1,14 +1,14 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
-import { IPendingListRepository } from '@modules/list/repositories/IPendingListRepository';
-import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
-import { User } from '@modules/users/entities/User';
-import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { INotifyUseCase } from '../../../notify/useCases/Notify/INotifyUseCase';
+import { User } from '../../../users/entities/User';
+import { IFamilyMembersRepository } from '../../../users/repositories/IFamilyMembersRepository';
+import { IUserRepository } from '../../../users/repositories/IUserRepository';
+import { IListRepository } from '../../repositories/IListRepository';
+import { IPendingListRepository } from '../../repositories/IPendingListRepository';
+import { IShareListRepository } from '../../repositories/IShareListRepository';
 
 interface IShareListRequest {
   ownerId: string;

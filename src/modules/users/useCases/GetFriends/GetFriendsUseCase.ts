@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { IFamilyMembersRepository } from '@modules/users/repositories/IFamilyMembersRepository';
+import { IFamilyMembersRepository } from '../../repositories/IFamilyMembersRepository';
 
 @injectable()
 class GetFriendsUseCase {

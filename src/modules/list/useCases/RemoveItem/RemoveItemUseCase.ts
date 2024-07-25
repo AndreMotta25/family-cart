@@ -1,12 +1,12 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { List } from '@modules/list/entities/List';
-import { IItemRepository } from '@modules/list/repositories/IItemRepository';
-import { IListRepository } from '@modules/list/repositories/IListRepository';
-import { IShareListRepository } from '@modules/list/repositories/IShareListRepository';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { INotifyUseCase } from '../../../notify/useCases/Notify/INotifyUseCase';
+import { List } from '../../entities/List';
+import { IItemRepository } from '../../repositories/IItemRepository';
+import { IListRepository } from '../../repositories/IListRepository';
+import { IShareListRepository } from '../../repositories/IShareListRepository';
 
 interface IRemoveItemRequest {
   list_id: string;

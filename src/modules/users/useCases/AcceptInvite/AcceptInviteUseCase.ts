@@ -1,10 +1,10 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { INotifyUseCase } from '@modules/notify/useCases/Notify/INotifyUseCase';
-import { IInvitationsRepository } from '@modules/users/repositories/IInvitationsRepository';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { INotifyUseCase } from '../../../notify/useCases/Notify/INotifyUseCase';
+import { IInvitationsRepository } from '../../repositories/IInvitationsRepository';
+import { IUserRepository } from '../../repositories/IUserRepository';
 
 interface IAcceptInviteRequest {
   invitationOwnerId: string;

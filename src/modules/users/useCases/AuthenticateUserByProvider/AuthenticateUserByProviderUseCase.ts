@@ -1,10 +1,10 @@
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { INotificationRepository } from '@modules/notify/repositories/INotificationRepository';
-import { GoogleProvider } from '@modules/users/providers/externalAccounts/google/GoogleProvider';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
+import { GoogleProvider } from '../../providers/externalAccounts/google/GoogleProvider';
+import { IUserRepository } from '../../repositories/IUserRepository';
 
 export interface IProviders {
   google: GoogleProvider;

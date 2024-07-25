@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '@errors/AppError';
-import { IPhotoProvider } from '@modules/users/providers/photoProvider/IPhotoProvider';
-import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+import { AppError } from '../../../../errors/AppError';
+import { IPhotoProvider } from '../../providers/photoProvider/IPhotoProvider';
+import { IUserRepository } from '../../repositories/IUserRepository';
 
 interface IUploadAvatarRequest {
   file: string;

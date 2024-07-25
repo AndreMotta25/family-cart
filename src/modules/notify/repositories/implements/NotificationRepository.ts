@@ -1,11 +1,10 @@
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
-import { Notification } from '@modules/notify/entities/Notification';
-import { NotificationUser } from '@modules/notify/entities/NotificationUser';
-import { User } from '@modules/users/entities/User';
-
 import { database } from '../../../../database/index';
+import { User } from '../../../users/entities/User';
+import { Notification } from '../../entities/Notification';
+import { NotificationUser } from '../../entities/NotificationUser';
 import {
   INotificationRepository,
   INotificationRequest,
