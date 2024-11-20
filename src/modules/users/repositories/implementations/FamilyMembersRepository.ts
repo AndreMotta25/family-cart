@@ -88,12 +88,14 @@ class FamilyMembersRepository implements IFamilyMembersRepository {
           id: friend.kin.id,
           email: friend.kin.email,
           name: friend.kin.name,
+          url: '',
         };
       }
       return {
         id: friend.user.id,
         email: friend.user.email,
         name: friend.user.name,
+        url: '',
       };
     });
 

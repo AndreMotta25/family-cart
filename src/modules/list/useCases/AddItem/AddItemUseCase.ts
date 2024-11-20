@@ -57,6 +57,7 @@ class AddItemUseCase {
 
       if (userLogged?.id !== list.ownerId) receptors.push(list.ownerId);
 
+      // event.emit('AddNewItemNotification', () => {});
       await this.notifyRepository.create(
         {
           read: false,

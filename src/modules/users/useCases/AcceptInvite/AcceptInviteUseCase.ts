@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { v4 } from 'uuid';
 
 import { AppError } from '../../../../errors/AppError';
 import { INotificationRepository } from '../../../notify/repositories/INotificationRepository';
@@ -50,11 +51,10 @@ class AcceptInviteUseCase {
     if (!invitationExists)
       throw new AppError({ message: 'Invite Not Exists', statusCode: 404 });
 
-    const familyMembersConfirmation =
-      await this.invitationRepository.acceptInvitation({
-        target: invitationExists.user_pending,
-        owner: invitationExists.user,
-      });
+    await this.invitationRepository.acceptInvitation({
+      target: invitationExists.user_pending,
+      owner: invitationExists.user,
+    });
     /*
       Como vou deletar o convite, tenho que deletar a notificação que faz menção a ele também
     */
@@ -63,7 +63,7 @@ class AcceptInviteUseCase {
     await this.createNotification({
       emitterId: invitationOwnerId,
       read: true,
-      entity_id: familyMembersConfirmation.id,
+      entity_id: v4(),
       entity_name: 'familyMembers',
       type: 'invitationFamiliar',
       targets: [userLogged_id],
@@ -76,7 +76,7 @@ class AcceptInviteUseCase {
 
     await this.createNotificationForOwner({
       emitterId: userLogged_id,
-      entity_id: familyMembersConfirmation.id,
+      entity_id: v4(),
       target: invitationOwnerId,
     });
 

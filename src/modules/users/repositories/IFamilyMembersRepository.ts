@@ -9,6 +9,7 @@ export interface IFriendlyResponse {
   id: string;
   name: string;
   email: string;
+  url: string;
 }
 
 interface IFamilyMembersRepository {

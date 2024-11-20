@@ -27,9 +27,7 @@ class GetUserUseCase {
     const totalNotifications =
       await this.notificationRepository.totalOfNotifications(user.id);
 
-    const qtdFriends = await this.familyMemberRepository.getTotalFriends(
-      user.id,
-    );
+    const qtdFriends = await this.userRepository.getTotalFriends(user.id);
     const listsSharedTotal = (
       await this.shareListRepository.findShareByGuest(user.id)
     ).length;

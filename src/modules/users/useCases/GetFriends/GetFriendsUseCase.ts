@@ -1,5 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
+import { IUserRepository } from '@modules/users/repositories/IUserRepository';
+
 import { IFamilyMembersRepository } from '../../repositories/IFamilyMembersRepository';
 
 @injectable()
@@ -7,11 +9,12 @@ class GetFriendsUseCase {
   constructor(
     @inject('FamilyMembersRepository')
     private familyMembersRepository: IFamilyMembersRepository,
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
   ) {}
 
   async execute(id: string) {
-    const friends = await this.familyMembersRepository.getFriends(id);
-    return friends.map((friend) => ({ ...friend, url: '' }));
+    return this.userRepository.getFriends(id);
   }
 }
 

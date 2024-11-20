@@ -1,13 +1,13 @@
-import { FamilyMember } from '../../users/entities/FamilyMember';
+// import { FamilyMember } from '../../users/entities/FamilyMember';
 import { INotificationResponse } from '../repositories/implements/NotificationRepository';
 
 const familyMembersTemplates = {
-  acceptInvite(notification: INotificationResponse, member: FamilyMember) {
+  acceptInvite(notification: INotificationResponse, member: string) {
     const { emitter, receptor } = notification;
     return {
       type: 'warning',
       entity_type: 'familyMembers',
-      entity_id: member.id,
+      entity_id: member,
       message: `O usuario ${emitter.name} aceitou seu convite para ser amigo.`,
       notification_id: notification.id,
       created_at: notification.created_at,
@@ -30,16 +30,13 @@ const familyMembersTemplates = {
       isRead: notification.read,
     };
   },
-  invitationFamiliar(
-    notification: INotificationResponse,
-    member: FamilyMember,
-  ) {
+  invitationFamiliar(notification: INotificationResponse, member: string) {
     const { emitter, receptor } = notification;
 
     return {
       type: 'warning',
       entity_type: 'familyMembers',
-      entity_id: member.id,
+      entity_id: member,
       message: `Voce aceitou ser amigo de ${emitter.name}`,
       notification_id: notification.id,
       created_at: notification.created_at,

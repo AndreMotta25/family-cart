@@ -1,17 +1,21 @@
 import { inject, injectable } from 'tsyringe';
 import { Repository } from 'typeorm';
 
+import { User } from '@modules/users/entities/User';
+
 import { database } from '../../../../database/index';
-import { FamilyMember } from '../../entities/FamilyMember';
+// import { FamilyMember } from '../../entities/FamilyMember';
 import { Invitation } from '../../entities/Invitation';
 import { IFamilyMembersRepository } from '../IFamilyMembersRepository';
 import {
   IAcceptInvite,
+  IAcceptInviteResponse,
   ICreateFamiliar,
   IDeleteInvite,
   IFindInvite,
   IInvitationsRepository,
 } from '../IInvitationsRepository';
+import { IUserRepository } from '../IUserRepository';
 
 @injectable()
 class InvitationsRepository implements IInvitationsRepository {
@@ -20,6 +24,7 @@ class InvitationsRepository implements IInvitationsRepository {
   constructor(
     @inject('FamilyMembersRepository')
     private familyMembersRepository: IFamilyMembersRepository,
+    @inject('UserRepository') private userRepository: IUserRepository,
   ) {
     this.repository = database.getRepository(Invitation);
   }
@@ -34,11 +39,19 @@ class InvitationsRepository implements IInvitationsRepository {
   async acceptInvitation({
     target,
     owner,
-  }: IAcceptInvite): Promise<FamilyMember> {
-    const confirmation = await this.familyMembersRepository.create({
-      target,
-      owner,
+  }: IAcceptInvite): Promise<IAcceptInviteResponse> {
+    const user = (await this.userRepository.findById(owner.id)) as User;
+
+    user.friends = [...user.friends, target];
+
+    await this.userRepository.create({
+      ...user,
+      login: user.login as 'external' | 'internal',
     });
+    const confirmation = {
+      userId: target.id,
+      friendId: owner.id,
+    };
     return confirmation;
   }
 

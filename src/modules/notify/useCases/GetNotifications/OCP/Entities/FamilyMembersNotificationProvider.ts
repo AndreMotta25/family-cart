@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
+import { v4 } from 'uuid';
 
-import { FamilyMember } from '../../../../../users/entities/FamilyMember';
+// import { FamilyMember } from '../../../../../users/entities/FamilyMember';
 import { IFamilyMembersRepository } from '../../../../../users/repositories/IFamilyMembersRepository';
 import { familyMembersTemplates } from '../../../../notifications_templates/familyMembersTemplates';
 import {
@@ -19,9 +20,10 @@ class FamilyMemberNotificationProvider implements IGetNotification {
   async getNotifications(
     objectNotification: INotificationsGrouped,
   ): Promise<IResponse[]> {
-    const relation = (await this.familyMembersRepository.getRelationById(
-      objectNotification.entity_id,
-    )) as FamilyMember;
+    // const relation = (await this.familyMembersRepository.getRelationById(
+    //   objectNotification.entity_id,
+    // )) as FamilyMember;
+    const relation = v4();
 
     return objectNotification.notifications.map((notification) => {
       const type = notification.type as 'acceptInvite' | 'invitationFamiliar';

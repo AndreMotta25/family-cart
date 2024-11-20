@@ -7,7 +7,12 @@ if (process.env.NODE_ENV?.toLowerCase() === 'production') extension = 'js';
 
 const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
-  url: 'postgresql://postgres.ikxaojmvahbzvslllafp:Desenhos12@@aws-0-us-west-1.pooler.supabase.com:6543/postgres',
+  host: 'localhost',
+  port: 8888,
+  username: 'docker',
+  password: 'docker',
+  database: 'familyCart',
+  // url: 'postgresql://postgres.ikxaojmvahbzvslllafp:Desenhos12@@aws-0-us-west-1.pooler.supabase.com:6543/postgres',
   entities: [
     /*
       Quando compilarmos, a pasta dist também tem que estar na url.

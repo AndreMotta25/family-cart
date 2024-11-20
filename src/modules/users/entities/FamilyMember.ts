@@ -4,7 +4,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Entity as Parent } from '../../shared/entities/Entity';
 import { User } from './User';
 
-@Entity('FamilyMembers')
+// @Entity('FamilyMembers')
 class FamilyMember extends Parent {
   @ManyToOne(() => User)
   user: User;

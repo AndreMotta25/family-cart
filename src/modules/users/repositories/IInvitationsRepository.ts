@@ -1,4 +1,4 @@
-import { FamilyMember } from '../entities/FamilyMember';
+// import { FamilyMember } from '../entities/FamilyMember';
 import { Invitation } from '../entities/Invitation';
 import { User } from '../entities/User';
 
@@ -16,13 +16,19 @@ export interface IAcceptInvite {
   owner: User;
   target: User;
 }
-
+export interface IAcceptInviteResponse {
+  userId: string;
+  friendId: string;
+}
 interface IInvitationsRepository {
   create(data: ICreateFamiliar): Promise<Invitation>;
   findInvitationsByUser(id: string): Promise<Invitation[]>;
   findInvitation({ owner, target }: IFindInvite): Promise<Invitation | null>;
   deleteInvitation({ owner, target }: IDeleteInvite): Promise<void>;
-  acceptInvitation({ target, owner }: IAcceptInvite): Promise<FamilyMember>;
+  acceptInvitation({
+    target,
+    owner,
+  }: IAcceptInvite): Promise<IAcceptInviteResponse>;
   findInvitationById(id: string): Promise<Invitation | null>;
 }
 

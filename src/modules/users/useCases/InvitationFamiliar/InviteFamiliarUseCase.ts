@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { inject, injectable } from 'tsyringe';
 
 import { User } from '@modules/users/entities/User';
@@ -55,7 +56,7 @@ class InviteFamiliarUseCase {
       });
     }
 
-    const friendshipExists = await this.familyMembersRepository.alreadyFriends({
+    const friendshipExists = await this.userRepository.alreadyFriends({
       target: targetExist.id,
       owner: userExist?.id as string,
     });
@@ -82,13 +83,13 @@ class InviteFamiliarUseCase {
       [targetExist.id],
     );
     // SSE
-    await this.notifyUseCase.execute(
-      targetExist.id,
-      JSON.stringify({
-        message: 'Você recebeu uma nova notificação.',
-        isNew: 1,
-      }),
-    );
+    // await this.notifyUseCase.execute(
+    //   targetExist.id,
+    //   JSON.stringify({
+    //     message: 'Você recebeu uma nova notificação.',
+    //     isNew: 1,
+    //   }),
+    // );
   }
 }
 

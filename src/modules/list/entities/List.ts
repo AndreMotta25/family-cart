@@ -14,7 +14,7 @@ import { SharedList } from './SharedList';
 
 @Entity('Lists')
 class List extends Parent {
-  @ManyToOne(() => User) // muitas listas para um usuario.
+  @ManyToOne(() => User) // Um usuario pode ter muitas listas.
   owner: User;
 
   // Essa propriedade só vai entrar aqui para podermos pesquisar.
@@ -30,9 +30,11 @@ class List extends Parent {
   @UpdateDateColumn({ type: 'timestamptz' })
   update_at: Date;
 
+  // uma lista tem muitos itens
   @OneToMany(() => Item, (item) => item.list)
   itens: Item[];
 
+  // uma lista pode ser compartilhada com varios usuarios.
   @OneToMany(() => SharedList, (s) => s.list, { onDelete: 'CASCADE' })
   aditionalUsers: SharedList[];
 
