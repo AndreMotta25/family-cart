@@ -3,7 +3,12 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { SeederOptions } from 'typeorm-extension';
 
 let extension = 'ts';
-if (process.env.NODE_ENV?.toLowerCase() === 'production') extension = 'js';
+let dir = './src';
+
+if (process.env.NODE_ENV?.toLowerCase() === 'production') {
+  extension = 'js';
+  dir = './dist/src';
+}
 
 const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
@@ -21,12 +26,12 @@ const options: DataSourceOptions & SeederOptions = {
       */
     // `${__dirname}/../modules/**/entities/*.${extension}`
 
-    `./src/modules/users/entities/*.${extension}`,
-    `./src/modules/list/entities/*.${extension}`,
-    `./src/modules/shared/entities/*.${extension}`,
-    `./src/modules/notify/entities/*.${extension}`,
+    `${dir}/modules/users/entities/*.${extension}`,
+    `${dir}/modules/list/entities/*.${extension}`,
+    `${dir}/modules/shared/entities/*.${extension}`,
+    `${dir}/modules/notify/entities/*.${extension}`,
   ],
-  migrations: [`./src/database/migrations/*.${extension}`],
+  migrations: [`${dir}/database/migrations/*.${extension}`],
   seeds: [],
 };
 
